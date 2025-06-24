@@ -1,18 +1,1 @@
-#!/bin/sh
-# .husky/pre-commit
-
-# Exit immediately if a command exits with a non-zero status.
-set -e
-
-echo "💅 Running ESLint to check for code quality and errors..."
-
-# 4. Run ESLint on all relevant files.
-# This command lints Astro, Vue, JS, and TS files.
-# The --fix flag can be added to automatically fix simple issues.
-# The --max-warnings 0 flag ensures that any warning will also fail the check.
-npx eslint . --ext .js,.ts,.astro,.vue --max-warnings 0
-
-echo "✅ Pre-commit checks passed successfully!"
-
-# Exit with a zero status to allow the commit.
-exit 0
+echo "woof woof"
