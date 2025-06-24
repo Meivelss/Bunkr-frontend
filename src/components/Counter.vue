@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-function gowno() {
+function sranie() {
   return 1;
 }
 
