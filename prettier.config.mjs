@@ -1,23 +1,15 @@
 // to run that bitch on everything:
 // prettier --write "**/*.js"
 
-import prettierPluginAstro from "prettier-plugin-astro";
-import prettierPluginTailwindCSS from "prettier-plugin-tailwindcss";
-
+// .prettierrc.mjs
 /** @type {import("prettier").Config} */
 export default {
-  plugins: [prettierPluginAstro, prettierPluginTailwindCSS],
+  plugins: ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
   overrides: [
     {
       files: "*.astro",
       options: {
         parser: "astro",
-      },
-    },
-    {
-      files: "*.vue",
-      options: {
-        parser: "vue",
       },
     },
   ],
