@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+function gowno() {
+  return 1;
+}
+
 const count = ref(0);
 const add = () => count.value++;
 const subtract = () => count.value--;
