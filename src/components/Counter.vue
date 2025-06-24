@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-
-function sranie() {
-  return 1;
-}
+import { Input } from "@/components/ui/input";
 
 const count = ref(0);
 const add = () => count.value++;
@@ -11,6 +8,7 @@ const subtract = () => count.value--;
 </script>
 
 <template>
+  <Input />
   <div class="counter">
     <button @click="subtract">-</button>
     <pre>{{ count }}</pre>

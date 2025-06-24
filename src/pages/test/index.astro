@@ -1,8 +1,15 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 ---
 
 <Layout>
-  Hello from test
-  <a href="/">To base</a>
+  <div class="flex flex-col gap-3 text-center">
+    Hello from test
+    <a href="/">To base</a>
+    <Input />
+    <Input />
+    <Button>Send</Button>
+  </div>
 </Layout>
