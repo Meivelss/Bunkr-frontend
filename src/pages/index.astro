@@ -1,0 +1,16 @@
+---
+// Component Imports
+import Counter from "../components/Counter.vue";
+import Layout from "../layouts/Layout.astro";
+
+// Full Astro Component Syntax:
+// https://docs.astro.build/basics/astro-components/
+---
+
+<Layout>
+    <Counter client:visible>
+        <h1>Hello, Vue!</h1>
+    </Counter>
+    <a href="/test">To test</a>
+    <div class="h-10 bg-red-500"></div>
+</Layout>
