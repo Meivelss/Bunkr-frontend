@@ -1,12 +1,14 @@
 <template>
   <form @submit.prevent="handleSubmit" class="w-full space-y-2">
     <Input
+      v-model="email"
       required
       type="email"
       placeholder="you@example.com"
       class="w-full border-0 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
     />
     <Input
+      v-model="password"
       required
       type="password"
       placeholder="••••••••"
@@ -41,14 +43,12 @@ const isLoading = ref(false);
 const errorMessage = ref("");
 
 async function handleSubmit() {
-  errorMessage.value = ""; // Clear previous errors
-  isLoading.value = true;
+  console.log("attempting login with:");
+  console.log("email:", email.value);
+  console.log("password:", password.value);
+  console.log("remember Me:", rememberMe.value);
 
-  console.log("Attempting login with:");
-  console.log("Email:", email.value);
-  console.log("Password:", password.value);
-  console.log("Remember Me:", rememberMe.value);
-
-  isLoading.value = false;
+  /* clear password after submit */
+  password.value = "";
 }
 </script>
