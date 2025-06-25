@@ -1,52 +1,18 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-
-let email = "";
-let password = "";
-let rememberMe = false;
-
-function handleSubmit() {
-  console.log("Email:", email);
-  console.log("Password:", password);
-  console.log("Remember Me:", rememberMe);
-}
+import AuthForm from "@/components/AuthForm.vue";
 ---
 
 <Layout>
   <div
     class="flex min-h-screen w-full items-center justify-center bg-[url('/public/forest.jpg')] bg-cover bg-center"
   >
-    <form on:submit.prevent={handleSubmit} class="w-full max-w-xs space-y-6">
-      <h1 class="text-4xl text-white">Login</h1>
-      <div class="flex flex-col gap-4">
-        <Input
-          required
-          type="email"
-          placeholder="you@example.com"
-          class="border-0 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-300"
-        />
-        <Input
-          required
-          type="password"
-          placeholder="••••••••"
-          class="border-0 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-300"
-        />
-        <div class="flex w-full justify-between text-sm text-gray-300">
-          <div class="flex items-center gap-x-2">
-            <Checkbox id="remember" v-model="rememberMe" />
-            <label for="remember">Remember me</label>
-          </div>
-          <a href="/test">Forgot password?</a>
-        </div>
-        <Button
-          class="w-full bg-white/25 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-black"
-          >Submit</Button
-        >
+    <div class="flex min-w-xs flex-col items-center gap-5">
+      <div class="flex w-full">
+        <h1 class="text-4xl font-bold text-white">Login</h1>
       </div>
-    </form>
+      <AuthForm />
+    </div>
   </div>
 </Layout>
 
