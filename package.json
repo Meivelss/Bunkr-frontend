@@ -8,6 +8,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "prepare": "husky",
+    "test": "vitest",
     "lint": "prettier --check .",
     "lint-staged": "lint-staged"
   },
@@ -36,6 +37,7 @@
     "lint-staged": "^16.1.2",
     "prettier": "3.6.0",
     "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "0.6.13"
+    "prettier-plugin-tailwindcss": "0.6.13",
+    "vitest": "^3.2.4"
   }
 }
