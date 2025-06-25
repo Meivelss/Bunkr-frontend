@@ -8,7 +8,14 @@
     "preview": "astro preview",
     "astro": "astro",
     "prepare": "husky",
-    "lint": "prettier --check ."
+    "lint": "prettier --check .",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,css,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "@astrojs/vue": "^5.1.0",
