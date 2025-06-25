@@ -13,6 +13,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitAny": true,
+    // Needed for Vitest
+    "types": ["vitest/globals"],
     // Needed for TypeScript intellisense in the template inside Vue files
     "jsx": "preserve"
   }

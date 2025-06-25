@@ -1,25 +1,20 @@
-import { assert, expect, test } from "vitest";
+import Counter from "@/components/Counter.vue";
+import { describe } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/vue";
 
-// Edit an assertion and save to see HMR in action
-
-test("Math.sqrt()", () => {
-  expect(Math.sqrt(4)).toBe(2);
-  expect(Math.sqrt(144)).toBe(12);
-  expect(Math.sqrt(2)).toBe(Math.SQRT2);
-});
-
-test("JSON", () => {
-  const input = {
-    foo: "hello",
-    bar: "world",
-  };
-
-  const output = JSON.stringify(input);
-
-  expect(output).eq('{"foo":"hello","bar":"world"}');
-  assert.deepEqual(JSON.parse(output), input, "matches original");
-});
-
+/* example */
 test("this one fails", () => {
   expect("university").toBe("fun");
+});
+
+describe("Counter", () => {
+  it("should render counter", async () => {
+    render(Counter);
+    screen.getByText("0");
+    const button = screen.getByText("+");
+    await fireEvent.click(button);
+    await fireEvent.click(button);
+    await fireEvent.click(button);
+    screen.getByText("3");
+  });
 });
