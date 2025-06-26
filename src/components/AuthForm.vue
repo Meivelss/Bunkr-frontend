@@ -40,8 +40,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 const email = ref("");
 const password = ref("");
 const rememberMe = ref(false);
-const isLoading = ref(false);
-const errorMessage = ref("");
 
 async function handleSubmit() {
   console.log("attempting login with:");
