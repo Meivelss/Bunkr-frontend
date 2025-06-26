@@ -12,8 +12,8 @@ import {
 const email = ref("");
 const password = ref("");
 const rememberMe = ref(false);
-const awaiting2FA = ref(false);
 const pin = ref<string[]>([]);
+const awaiting2FA = ref(false);
 
 function sleep(ms: Number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -28,10 +28,11 @@ async function handleComplete() {
   await sleep(1000);
 
   if (pin.value) {
-    const pinConcat = pin.value.join("");
-    if (pinConcat === "213769") {
-      window.location.replace("/");
-    }
+    // const pinConcat = pin.value.join("");
+    // if (pinConcat === "213769") {
+    //   window.location.replace("/");
+    // }
+    window.location.replace("/");
   }
 }
 
@@ -42,10 +43,11 @@ async function handleSubmit() {
   /* imitation of credential check */
   await sleep(1000);
 
-  if (email.value === "admin@wp.pl" && password.value === "admin") {
-    console.log("credentials good wowoowoo");
-    awaiting2FA.value = true;
-  }
+  // if (email.value === "admin@wp.pl" && password.value === "admin") {
+  //   console.log("credentials good wowoowoo");
+  //   awaiting2FA.value = true;
+  // }
+  awaiting2FA.value = true;
 
   /* clear password after submit */
   password.value = "";
@@ -53,7 +55,7 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div class="flex w-full flex-col space-y-4">
+  <div class="flex w-full flex-col space-y-4 select-none">
     <div class="flex w-full">
       <h1 v-if="!awaiting2FA" class="text-4xl font-bold text-white">
         Zaloguj się
