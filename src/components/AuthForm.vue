@@ -9,48 +9,48 @@ import {
   PinInputSlot,
 } from "@/components/ui/pin-input";
 
-const email = ref("");
-const password = ref("");
-const rememberMe = ref(false);
-const pin = ref<string[]>([]);
+const userDetails = ref({
+  email: "",
+  password: "",
+  rememberMe: false,
+  pin: [] as string[],
+});
+
 const awaiting2FA = ref(false);
 
-function sleep(ms: Number) {
+function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /* called when all pin fields have a value */
 async function handleComplete() {
   console.log("completed pin");
-  console.log("pin:", pin.value);
+  // Access the pin value via userDetails.value.pin
+
+  const concat = userDetails.value.pin.join("");
+  console.log("pin:", concat);
 
   /* imitation of a pin check */
   await sleep(1000);
 
-  if (pin.value) {
-    // const pinConcat = pin.value.join("");
-    // if (pinConcat === "213769") {
-    //   window.location.replace("/");
-    // }
+  if (userDetails.value.pin) {
     window.location.replace("/");
   }
 }
 
 /* called on form submit */
 async function handleSubmit() {
-  console.log("remember Me:", rememberMe.value);
+  console.log("email:", userDetails.value.email);
+  console.log("password:", userDetails.value.password);
+  console.log("remember Me:", userDetails.value.rememberMe);
 
   /* imitation of credential check */
   await sleep(1000);
 
-  // if (email.value === "admin@wp.pl" && password.value === "admin") {
-  //   console.log("credentials good wowoowoo");
-  //   awaiting2FA.value = true;
-  // }
   awaiting2FA.value = true;
 
   /* clear password after submit */
-  password.value = "";
+  userDetails.value.password = "";
 }
 </script>
 
@@ -70,7 +70,7 @@ async function handleSubmit() {
       class="w-full space-y-2"
     >
       <Input
-        v-model="email"
+        v-model="userDetails.email"
         autofocus
         required
         type="email"
@@ -78,7 +78,7 @@ async function handleSubmit() {
         class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
       />
       <Input
-        v-model="password"
+        v-model="userDetails.password"
         required
         type="password"
         placeholder="Hasło"
@@ -91,7 +91,7 @@ async function handleSubmit() {
           <Checkbox
             class="data-[state=checked]:bg-red-800/50"
             id="remember"
-            v-model="rememberMe"
+            v-model="userDetails.rememberMe"
           />
           <label for="remember">Zapamiętaj mnie</label>
         </div>
@@ -114,7 +114,7 @@ async function handleSubmit() {
         id="pin-input"
         otp
         type="number"
-        v-model="pin"
+        v-model="userDetails.pin"
         @complete="handleComplete"
       >
         <PinInputGroup class="flex w-full justify-between">
