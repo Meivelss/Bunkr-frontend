@@ -24,6 +24,7 @@
       <a href="/" class="hover:underline">Forgot password?</a>
     </div>
     <Button
+      id="submit"
       class="w-full bg-white/25 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-black"
       >Submit</Button
     >
