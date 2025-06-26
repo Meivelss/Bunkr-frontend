@@ -6,7 +6,7 @@
       autofocus
       required
       type="email"
-      placeholder="you@example.com"
+      placeholder="Adres e-mail"
       class="w-full border-0 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
     />
     <Input
@@ -14,7 +14,7 @@
       v-model="password"
       required
       type="password"
-      placeholder="password"
+      placeholder="Hasło"
       class="w-full border-0 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
     />
     <PinInput
@@ -34,7 +34,7 @@
       </PinInputGroup>
     </PinInput>
     <div
-      class="flex h-9 w-full items-center justify-between gap-x-2 text-sm text-gray-300"
+      class="flex h-9 w-full items-center justify-between gap-x-2 text-sm text-gray-200"
     >
       <div class="flex items-center gap-x-2">
         <Checkbox
@@ -42,14 +42,14 @@
           id="remember"
           v-model="rememberMe"
         />
-        <label for="remember">Remember Me</label>
+        <label for="remember">Zapamiętaj mnie</label>
       </div>
-      <a href="/forgot-password" class="hover:underline">Forgot Password?</a>
+      <a href="/forgot-password" class="hover:underline">Zapomniałeś hasło?</a>
     </div>
     <Button
       id="submit"
       class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
-      >Submit</Button
+      >Logowanie</Button
     >
   </form>
 </template>
