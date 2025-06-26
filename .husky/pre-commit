@@ -1,2 +1,3 @@
 echo "woof woof"
 pnpm run lint-staged
+pnpm test
