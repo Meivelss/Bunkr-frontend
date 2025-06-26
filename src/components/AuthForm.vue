@@ -3,6 +3,7 @@
     <Input
       v-if="!awaiting2FA"
       v-model="email"
+      autofocus
       required
       type="email"
       placeholder="you@example.com"
