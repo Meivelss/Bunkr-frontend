@@ -37,14 +37,18 @@
       class="flex h-9 w-full items-center justify-between gap-x-2 text-sm text-gray-300"
     >
       <div class="flex items-center gap-x-2">
-        <Checkbox id="remember" v-model="rememberMe" />
+        <Checkbox
+          class="data-[state=checked]:bg-red-800/50"
+          id="remember"
+          v-model="rememberMe"
+        />
         <label for="remember">Remember Me</label>
       </div>
       <a href="/forgot-password" class="hover:underline">Forgot Password?</a>
     </div>
     <Button
       id="submit"
-      class="w-full bg-white/25 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-black"
+      class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
       >Submit</Button
     >
   </form>
