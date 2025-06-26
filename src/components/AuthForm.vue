@@ -19,9 +19,9 @@
     >
       <div class="flex items-center gap-x-2">
         <Checkbox id="remember" v-model="rememberMe" />
-        <label for="remember">Remember me</label>
+        <label for="remember">Remember Me</label>
       </div>
-      <a href="/" class="hover:underline">Forgot password?</a>
+      <a href="/" class="hover:underline">Forgot Password?</a>
     </div>
     <Button
       id="submit"
