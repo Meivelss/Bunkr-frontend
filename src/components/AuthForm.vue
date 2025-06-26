@@ -21,7 +21,7 @@
         <Checkbox id="remember" v-model="rememberMe" />
         <label for="remember">Remember Me</label>
       </div>
-      <a href="/" class="hover:underline">Forgot Password?</a>
+      <a href="/forgot-password" class="hover:underline">Forgot Password?</a>
     </div>
     <Button
       id="submit"
