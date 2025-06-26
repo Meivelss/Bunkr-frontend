@@ -78,7 +78,6 @@ async function handleSubmit() {
         class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
       />
       <Input
-        v-if="!awaiting2FA"
         v-model="password"
         required
         type="password"
