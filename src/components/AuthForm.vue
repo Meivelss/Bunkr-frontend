@@ -11,7 +11,7 @@
       v-model="password"
       required
       type="password"
-      placeholder="••••••••"
+      placeholder="password"
       class="w-full border-0 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
     />
     <div
