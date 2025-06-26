@@ -82,8 +82,6 @@ async function handleComplete() {
     const pinConcat = pin.value.join("");
     if (pinConcat === "213769") {
       window.location.replace("/");
-    } else {
-      pin.value = [];
     }
   }
 }
