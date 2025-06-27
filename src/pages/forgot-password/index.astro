@@ -1,9 +1,14 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import ForgotPasswordForm from "@/components/ForgotPasswordForm.vue";
 ---
 
 <Layout>
-  <h1>i forgor</h1>
-  <a href="/">go bacc</a>
-  <a href="/login">login</a>
+  <div
+    class="flex h-screen w-full items-center justify-center bg-[url('/forest.jpg')] bg-cover bg-center"
+  >
+    <div class="flex w-xs flex-col items-center gap-5">
+      <ForgotPasswordForm client:load />
+    </div>
+  </div>
 </Layout>
