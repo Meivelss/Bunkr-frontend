@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import isValidEmail from "@/utils/isValidEmail";
 import {
   PinInput,
   PinInputGroup,
@@ -44,6 +45,11 @@ async function handleSubmit() {
   console.log("password:", userDetails.value.password);
   console.log("remember Me:", userDetails.value.rememberMe);
 
+  userDetails.value.email = userDetails.value.email.trim();
+
+  /* currently ignoring output of this for convenience */
+  console.log("email looks good:", isValidEmail(userDetails.value.email));
+
   /* imitation of credential check */
   await sleep(1000);
 
@@ -73,7 +79,6 @@ async function handleSubmit() {
         v-model="userDetails.email"
         autofocus
         required
-        type="email"
         placeholder="Adres e-mail"
         class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
       />

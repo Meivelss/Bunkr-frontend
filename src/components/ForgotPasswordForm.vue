@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import isValidEmail from "@/utils/isValidEmail";
 
 const userDetails = ref({
   email: "",
@@ -10,6 +11,11 @@ const userDetails = ref({
 /* called on form submit */
 async function handleSubmit() {
   console.log("email:", userDetails.value.email);
+
+  userDetails.value.email = userDetails.value.email.trim();
+
+  /* TODO: display feedback to screen */
+  console.log("looks correct:", isValidEmail(userDetails.value.email));
 }
 </script>
 
@@ -28,7 +34,6 @@ async function handleSubmit() {
         v-model="userDetails.email"
         autofocus
         required
-        type="email"
         placeholder="Adres e-mail"
         class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
       />
@@ -37,7 +42,9 @@ async function handleSubmit() {
         class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
         >Reset hasła</Button
       >
-      <a href="/login" class="text-white hover:underline">Logowanie</a>
+      <a href="/login" class="text-white hover:underline"
+        >Powrót do logowania</a
+      >
     </form>
   </div>
 </template>
