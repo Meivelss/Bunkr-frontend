@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-vue-next";
 
 const password = ref("");
 const repeatPassword = ref("");
@@ -53,6 +54,9 @@ async function handleSubmit() {
         >Zmień hasło</Button
       >
     </form>
-    <a href="/login" class="text-white hover:underline">Powrót do logowania</a>
+    <a href="/login" class="flex items-center gap-1 text-white hover:underline">
+      <ChevronLeft color="white" />
+      <span>Powrót do logowania</span>
+    </a>
   </div>
 </template>

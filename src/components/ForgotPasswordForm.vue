@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-vue-next";
 import isValidEmail from "@/utils/isValidEmail";
 
 const userDetails = ref({
@@ -42,9 +43,13 @@ async function handleSubmit() {
         class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
         >Reset hasła</Button
       >
-      <a href="/login" class="text-white hover:underline"
-        >Powrót do logowania</a
+      <a
+        href="/login"
+        class="flex items-center gap-1 text-white hover:underline"
       >
+        <ChevronLeft color="white" />
+        <span>Powrót do logowania</span>
+      </a>
     </form>
   </div>
 </template>
