@@ -1,16 +1,8 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import AuthLayout from "@/layouts/AuthLayout.astro";
 import ForgotPasswordForm from "@/components/ForgotPasswordForm.vue";
 ---
 
-<!-- this block is identical to the one in Login, so we should probably
-make it a layout -->
-<Layout>
-  <div
-    class="flex h-screen w-full items-center justify-center bg-[url('/forest.jpg')] bg-cover bg-center"
-  >
-    <div class="flex w-xs flex-col items-center gap-5">
-      <ForgotPasswordForm client:load />
-    </div>
-  </div>
-</Layout>
+<AuthLayout>
+  <ForgotPasswordForm client:load />
+</AuthLayout>
