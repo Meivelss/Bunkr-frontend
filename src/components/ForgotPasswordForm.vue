@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-vue-next";
-import { SendHorizonal } from "lucide-vue-next";
 import { Mail } from "lucide-vue-next";
 import isValidEmail from "@/utils/isValidEmail";
 
@@ -11,10 +10,17 @@ const userDetails = ref({
   email: "",
 });
 
+const loading = ref(false);
 const submitted = ref(false);
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 /* called on form submit */
 async function handleSubmit() {
+  loading.value = true;
+
   console.log("email:", userDetails.value.email);
 
   userDetails.value.email = userDetails.value.email.trim();
@@ -22,6 +28,9 @@ async function handleSubmit() {
   /* TODO: display feedback to screen */
   console.log("looks correct:", isValidEmail(userDetails.value.email));
 
+  await sleep(2000);
+
+  loading.value = false;
   submitted.value = true;
 }
 </script>
@@ -64,6 +73,7 @@ async function handleSubmit() {
       />
       <Button
         id="submit"
+        :disabled="loading"
         class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
         >Reset hasła</Button
       >

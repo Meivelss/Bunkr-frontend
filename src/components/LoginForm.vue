@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronLeft } from "lucide-vue-next";
 import isValidEmail from "@/utils/isValidEmail";
 import {
   PinInput,
@@ -17,6 +18,7 @@ const userDetails = ref({
   pin: [] as string[],
 });
 
+const loading = ref(false);
 const awaiting2FA = ref(false);
 
 function sleep(ms: number) {
@@ -25,6 +27,8 @@ function sleep(ms: number) {
 
 /* called when all pin fields have a value */
 async function handleComplete() {
+  loading.value = true;
+
   console.log("completed pin");
 
   const concat = userDetails.value.pin.join("");
@@ -33,6 +37,8 @@ async function handleComplete() {
   /* imitation of a backend pin check */
   await sleep(1000);
 
+  loading.value = false;
+
   if (userDetails.value.pin) {
     window.location.replace("/");
   }
@@ -40,6 +46,8 @@ async function handleComplete() {
 
 /* called on form submit */
 async function handleSubmit() {
+  loading.value = true;
+
   console.log("email:", userDetails.value.email);
   console.log("password:", userDetails.value.password);
   console.log("remember Me:", userDetails.value.rememberMe);
@@ -51,6 +59,8 @@ async function handleSubmit() {
 
   /* imitation of backend credential check */
   await sleep(1000);
+
+  loading.value = false;
 
   awaiting2FA.value = true;
 
@@ -105,6 +115,7 @@ async function handleSubmit() {
       </div>
       <Button
         id="submit"
+        :disabled="loading"
         class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
         >Logowanie</Button
       >
@@ -118,6 +129,7 @@ async function handleSubmit() {
         id="pin-input"
         otp
         type="number"
+        :disabled="loading"
         v-model="userDetails.pin"
         @complete="handleComplete"
       >
@@ -132,9 +144,10 @@ async function handleSubmit() {
       </PinInput>
       <p
         @click="awaiting2FA = false"
-        class="cursor-pointer text-sm font-bold text-white text-shadow-md hover:underline"
+        class="flex cursor-pointer items-center gap-1 text-white hover:underline"
       >
-        Powrót do logowania
+        <ChevronLeft color="white" />
+        <span>Powrót do logowania</span>
       </p>
     </div>
   </div>
