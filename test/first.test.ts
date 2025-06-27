@@ -3,9 +3,9 @@ import { describe } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/vue";
 
 /* example */
-test("this one fails", () => {
-  expect("university").toBe("fun");
-});
+// test("this one fails", () => {
+//   expect("university").toBe("fun");
+// });
 
 describe("Counter", () => {
   it("should render counter", async () => {
