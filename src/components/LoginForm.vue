@@ -139,7 +139,9 @@ async function handleSubmit() {
           />
           <label for="remember">Zapamiętaj mnie</label>
         </div>
-        <a href="/forgot-password" class="hover:underline"
+        <a
+          href="/forgot-password"
+          class="decoration-red-800/50 decoration-3 hover:underline"
           >Zapomniałeś hasło?</a
         >
       </div>
