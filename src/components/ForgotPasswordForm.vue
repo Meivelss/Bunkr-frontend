@@ -3,11 +3,15 @@ import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-vue-next";
+import { SendHorizonal } from "lucide-vue-next";
+import { Mail } from "lucide-vue-next";
 import isValidEmail from "@/utils/isValidEmail";
 
 const userDetails = ref({
   email: "",
 });
+
+const submitted = ref(false);
 
 /* called on form submit */
 async function handleSubmit() {
@@ -17,11 +21,31 @@ async function handleSubmit() {
 
   /* TODO: display feedback to screen */
   console.log("looks correct:", isValidEmail(userDetails.value.email));
+
+  submitted.value = true;
 }
 </script>
 
 <template>
-  <div class="flex w-full flex-col space-y-4 select-none">
+  <div
+    v-if="submitted"
+    class="flex flex-col items-center justify-center gap-4 text-white"
+  >
+    <Mail color="white" :stroke-width="1" :size="102" />
+    <div class="flex flex-col gap-2 text-center">
+      <p>sprawdź majla, wysłaliśmy link pod adres:</p>
+      <p class="text-2xl font-bold">{{ userDetails.email }}</p>
+      <p>
+        jeśli wpisany przez ciebie adres jest poprawny, dostaniesz tam link do
+        resetu hasła.
+      </p>
+    </div>
+    <a href="/login" class="flex items-center gap-1 text-white hover:underline">
+      <ChevronLeft color="white" />
+      <span>Powrót do logowania</span>
+    </a>
+  </div>
+  <div v-else class="flex w-full flex-col space-y-4 select-none">
     <div class="flex w-full">
       <h1 class="text-4xl font-bold text-white">i forgor</h1>
     </div>
