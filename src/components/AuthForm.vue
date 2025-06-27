@@ -26,12 +26,11 @@ function sleep(ms: number) {
 /* called when all pin fields have a value */
 async function handleComplete() {
   console.log("completed pin");
-  // Access the pin value via userDetails.value.pin
 
   const concat = userDetails.value.pin.join("");
   console.log("pin:", concat);
 
-  /* imitation of a pin check */
+  /* imitation of a backend pin check */
   await sleep(1000);
 
   if (userDetails.value.pin) {
@@ -50,7 +49,7 @@ async function handleSubmit() {
   /* currently ignoring output of this for convenience */
   console.log("email looks good:", isValidEmail(userDetails.value.email));
 
-  /* imitation of credential check */
+  /* imitation of backend credential check */
   await sleep(1000);
 
   awaiting2FA.value = true;
