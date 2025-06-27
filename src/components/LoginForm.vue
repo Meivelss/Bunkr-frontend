@@ -53,6 +53,7 @@ async function handleComplete() {
       error.value = fallbackError;
     }
   } finally {
+    userDetails.value.pin = [];
     loading.value = false;
   }
 }
