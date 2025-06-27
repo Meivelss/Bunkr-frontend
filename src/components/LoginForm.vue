@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronLeft } from "lucide-vue-next";
+import { ChevronLeft, CircleX } from "lucide-vue-next";
 import isValidEmail from "@/utils/isValidEmail";
 import {
   PinInput,
@@ -20,52 +20,74 @@ const userDetails = ref({
 
 const loading = ref(false);
 const awaiting2FA = ref(false);
+const error = ref("");
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/* called when all pin fields have a value */
+/* called when last pin value is typed */
 async function handleComplete() {
+  error.value = "";
   loading.value = true;
 
-  console.log("completed pin");
+  try {
+    const pin = userDetails.value.pin.join("");
+    console.log("pin:", pin);
 
-  const concat = userDetails.value.pin.join("");
-  console.log("pin:", concat);
+    /* imitation of a backend pin check */
+    await sleep(2000);
 
-  /* imitation of a backend pin check */
-  await sleep(1000);
+    if (pin !== "121212") {
+      throw new Error("Jednorazowy kod jest nieprawidłowy.");
+    }
 
-  loading.value = false;
-
-  if (userDetails.value.pin) {
     window.location.replace("/");
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error("Authentication failed:", err.message);
+      error.value = err.message;
+    } else {
+      const fallbackError = "Wystąpił nieoczekiwany błąd.";
+      console.error("An unexpected error occurred:", err);
+      error.value = fallbackError;
+    }
+  } finally {
+    loading.value = false;
   }
 }
 
 /* called on form submit */
 async function handleSubmit() {
+  error.value = "";
   loading.value = true;
 
-  console.log("email:", userDetails.value.email);
-  console.log("password:", userDetails.value.password);
-  console.log("remember Me:", userDetails.value.rememberMe);
+  try {
+    const email = userDetails.value.email.trim();
+    const password = userDetails.value.password;
 
-  userDetails.value.email = userDetails.value.email.trim();
+    if (!isValidEmail(email)) {
+      throw new Error("Wprowadź prawidłowy adres e-mail.");
+    }
 
-  /* currently ignoring output of this for convenience */
-  console.log("email looks good:", isValidEmail(userDetails.value.email));
+    /* imitation of backend credential check */
+    console.log(email, password);
+    await sleep(1000);
 
-  /* imitation of backend credential check */
-  await sleep(1000);
-
-  loading.value = false;
-
-  awaiting2FA.value = true;
-
-  /* clear password after submit */
-  userDetails.value.password = "";
+    awaiting2FA.value = true;
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error("Authentication failed:", err.message);
+      error.value = err.message;
+    } else {
+      const fallbackError = "Wystąpił nieoczekiwany błąd.";
+      console.error("An unexpected error occurred:", err);
+      error.value = fallbackError;
+    }
+  } finally {
+    loading.value = false;
+    userDetails.value.password = "";
+  }
 }
 </script>
 
@@ -78,6 +100,13 @@ async function handleSubmit() {
       <h1 v-else class="text-4xl font-bold text-white">
         Weryfikacja dwuetapowa
       </h1>
+    </div>
+    <div
+      v-if="error"
+      class="flex w-full flex-col items-center justify-center gap-2 rounded-md border-1 border-red-900 bg-red-800/40 p-3 text-sm font-bold text-white shadow-md backdrop-blur-sm"
+    >
+      <CircleX :size="20" />
+      <p class="text-center">{{ error }}</p>
     </div>
     <form
       v-if="!awaiting2FA"
