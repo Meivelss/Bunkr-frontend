@@ -52,14 +52,14 @@ async function handleSubmit() {
     v-if="success"
     class="flex flex-col items-center justify-center gap-4 text-white"
   >
-    <ShieldCheck color="white" :stroke-width="1" :size="102" />
+    <ShieldCheck class="text-primary" :stroke-width="1" :size="102" />
     <div class="flex flex-col gap-2 text-center">
       <p>
         Reset hasła powiódł się, możesz teraz zalogować się swoim nowym hasłem.
       </p>
     </div>
     <a href="/login" class="flex items-center gap-1 text-white hover:underline">
-      <ChevronLeft color="white" />
+      <ChevronLeft class="text-primary" />
       <span>Powrót do logowania</span>
     </a>
   </div>
@@ -94,12 +94,12 @@ async function handleSubmit() {
       />
       <Button
         id="submit"
-        class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
+        class="bg-secondary/50 hover:text-secondary hover:bg-primary/80 w-full text-white shadow-md backdrop-blur-sm"
         >Zmień hasło</Button
       >
     </form>
     <a href="/login" class="flex items-center gap-1 text-white hover:underline">
-      <ChevronLeft color="white" />
+      <ChevronLeft class="text-primary" />
       <span>Powrót do logowania</span>
     </a>
   </div>

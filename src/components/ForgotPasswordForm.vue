@@ -74,14 +74,14 @@ async function handleSubmit() {
       <Button
         id="submit"
         :disabled="loading"
-        class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
+        class="bg-secondary/50 hover:text-secondary hover:bg-primary/80 w-full text-white shadow-md backdrop-blur-sm"
         >Reset hasła</Button
       >
       <a
         href="/login"
         class="flex items-center gap-1 text-white hover:underline"
       >
-        <ChevronLeft color="white" />
+        <ChevronLeft class="text-primary" />
         <span>Powrót do logowania</span>
       </a>
     </form>

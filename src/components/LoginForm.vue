@@ -133,7 +133,7 @@ async function handleSubmit() {
       >
         <div class="flex items-center gap-x-2">
           <Checkbox
-            class="data-[state=checked]:bg-red-800/50"
+            class="data-[state=checked]:bg-secondary/50"
             id="remember"
             v-model="userDetails.rememberMe"
           />
@@ -141,14 +141,14 @@ async function handleSubmit() {
         </div>
         <a
           href="/forgot-password"
-          class="decoration-red-800/50 decoration-3 hover:underline"
+          class="decoration-secondary/50 decoration-3 hover:underline"
           >Zapomniałeś hasło?</a
         >
       </div>
       <Button
         id="submit"
         :disabled="loading"
-        class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
+        class="bg-secondary/50 hover:text-secondary hover:bg-primary/80 w-full text-white shadow-md backdrop-blur-sm"
         >Logowanie</Button
       >
     </form>
@@ -178,7 +178,7 @@ async function handleSubmit() {
         @click="awaiting2FA = false"
         class="flex cursor-pointer items-center gap-1 text-white hover:underline"
       >
-        <ChevronLeft color="white" />
+        <ChevronLeft class="text-primary" />
         <span>Powrót do logowania</span>
       </p>
     </div>
