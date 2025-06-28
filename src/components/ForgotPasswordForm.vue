@@ -41,25 +41,25 @@ async function handleSubmit() {
     class="flex flex-col items-center justify-center gap-4 text-white"
   >
     <Mail color="white" :stroke-width="1" :size="102" />
-    <div class="flex flex-col gap-2 text-center">
+    <div class="flex flex-col gap-2 text-center font-exo">
       <p>sprawdź majla, wysłaliśmy link pod adres:</p>
       <p class="text-2xl font-bold">{{ userDetails.email }}</p>
-      <p>
+      <p class="font-exo">
         jeśli wpisany przez ciebie adres jest poprawny, dostaniesz tam link do
         resetu hasła.
       </p>
     </div>
     <a href="/login" class="flex items-center gap-1 text-white hover:underline">
       <ChevronLeft color="white" />
-      <span>Powrót do logowania</span>
+      <span class="font-exo">Powrót do logowania</span>
     </a>
   </div>
   <div v-else class="flex w-full flex-col space-y-4 select-none">
     <div class="flex w-full">
-      <h1 class="text-4xl font-bold text-white">i forgor</h1>
+      <h1 class="text-4xl font-bold text-white font-roboto">i forgor</h1>
     </div>
     <form @submit.prevent="handleSubmit" class="w-full space-y-4">
-      <p class="text-sm text-white">
+      <p class="text-sm text-white font-exo">
         W poniższe pole wpisz adres e-mail przypisany do twojego konta i kliknij
         w zawarty w nim link, aby zresetować hasło.
         <br />Następnie postępuj zgodnie z informacjami w linku.
@@ -69,12 +69,12 @@ async function handleSubmit() {
         autofocus
         required
         placeholder="Adres e-mail"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
+        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400 font-exo"
       />
       <Button
         id="submit"
         :disabled="loading"
-        class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
+        class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800 font-exo"
         >Reset hasła</Button
       >
       <a
@@ -82,7 +82,7 @@ async function handleSubmit() {
         class="flex items-center gap-1 text-white hover:underline"
       >
         <ChevronLeft color="white" />
-        <span>Powrót do logowania</span>
+        <span class="font-exo">Powrót do logowania</span>
       </a>
     </form>
   </div>

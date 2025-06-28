@@ -95,7 +95,7 @@ async function handleSubmit() {
 <template>
   <div class="flex w-full flex-col space-y-4 select-none">
     <div class="flex w-full">
-      <h1 v-if="!awaiting2FA" class="text-4xl font-bold text-white">
+      <h1 v-if="!awaiting2FA" class="text-4xl font-bold text-white font-roboto">
         Zaloguj się
       </h1>
       <h1 v-else class="text-4xl font-bold text-white">
@@ -119,14 +119,14 @@ async function handleSubmit() {
         autofocus
         required
         placeholder="Adres e-mail"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
+        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400 font-exo"
       />
       <Input
         v-model="userDetails.password"
         required
         type="password"
         placeholder="Hasło"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
+        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400 font-exo"
       />
       <div
         class="flex h-9 w-full items-center justify-between gap-x-2 text-sm text-gray-200"
@@ -137,18 +137,18 @@ async function handleSubmit() {
             id="remember"
             v-model="userDetails.rememberMe"
           />
-          <label for="remember">Zapamiętaj mnie</label>
+          <label for="remember" class="font-exo">Zapamiętaj mnie</label>
         </div>
         <a
           href="/forgot-password"
-          class="decoration-red-800/50 decoration-3 hover:underline"
+          class="decoration-red-800/50 decoration-3 hover:underline font-exo"
           >Zapomniałeś hasło?</a
         >
       </div>
       <Button
         id="submit"
         :disabled="loading"
-        class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
+        class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800 font-exo"
         >Logowanie</Button
       >
     </form>
@@ -179,7 +179,7 @@ async function handleSubmit() {
         class="flex cursor-pointer items-center gap-1 text-white hover:underline"
       >
         <ChevronLeft color="white" />
-        <span>Powrót do logowania</span>
+        <span class="font-exo">Powrót do logowania</span>
       </p>
     </div>
   </div>
