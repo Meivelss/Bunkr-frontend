@@ -1,11 +1,11 @@
-import AuthForm from "@/components/AuthForm.vue";
+import LoginForm from "@/components/LoginForm.vue";
 import { describe, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/vue";
 import userEvent from "@testing-library/user-event"; // Import userEvent
 
 describe("Login", () => {
   it("reset password after submit", async () => {
-    const { getByPlaceholderText, getByText } = render(AuthForm);
+    const { getByPlaceholderText, getByText } = render(LoginForm);
 
     const emailInputField = getByPlaceholderText("Adres e-mail");
 

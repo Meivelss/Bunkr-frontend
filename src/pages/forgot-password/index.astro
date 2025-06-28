@@ -1,9 +1,8 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import AuthLayout from "@/layouts/AuthLayout.astro";
+import ForgotPasswordForm from "@/components/ForgotPasswordForm.vue";
 ---
 
-<Layout>
-  <h1>i forgor</h1>
-  <a href="/">go bacc</a>
-  <a href="/login">login</a>
-</Layout>
+<AuthLayout>
+  <ForgotPasswordForm client:load />
+</AuthLayout>

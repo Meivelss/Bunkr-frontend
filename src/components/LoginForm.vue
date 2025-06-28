@@ -3,6 +3,8 @@ import { ref } from "vue";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronLeft, CircleX } from "lucide-vue-next";
+import isValidEmail from "@/utils/isValidEmail";
 import {
   PinInput,
   PinInputGroup,
@@ -16,41 +18,77 @@ const userDetails = ref({
   pin: [] as string[],
 });
 
+const loading = ref(false);
 const awaiting2FA = ref(false);
+const error = ref("");
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/* called when all pin fields have a value */
+/* called when last pin value is typed */
 async function handleComplete() {
-  console.log("completed pin");
-  // Access the pin value via userDetails.value.pin
+  error.value = "";
+  loading.value = true;
 
-  const concat = userDetails.value.pin.join("");
-  console.log("pin:", concat);
+  try {
+    const pin = userDetails.value.pin.join("");
+    console.log("pin:", pin);
 
-  /* imitation of a pin check */
-  await sleep(1000);
+    /* imitation of a backend pin check */
+    await sleep(2000);
 
-  if (userDetails.value.pin) {
+    if (pin !== "121212") {
+      throw new Error("Jednorazowy kod jest nieprawidłowy.");
+    }
+
     window.location.replace("/");
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error("Authentication failed:", err.message);
+      error.value = err.message;
+    } else {
+      const fallbackError = "Wystąpił nieoczekiwany błąd.";
+      console.error("An unexpected error occurred:", err);
+      error.value = fallbackError;
+    }
+  } finally {
+    userDetails.value.pin = [];
+    loading.value = false;
   }
 }
 
 /* called on form submit */
 async function handleSubmit() {
-  console.log("email:", userDetails.value.email);
-  console.log("password:", userDetails.value.password);
-  console.log("remember Me:", userDetails.value.rememberMe);
+  error.value = "";
+  loading.value = true;
 
-  /* imitation of credential check */
-  await sleep(1000);
+  try {
+    const email = userDetails.value.email.trim();
+    const password = userDetails.value.password;
 
-  awaiting2FA.value = true;
+    if (!isValidEmail(email)) {
+      throw new Error("Wprowadź prawidłowy adres e-mail.");
+    }
 
-  /* clear password after submit */
-  userDetails.value.password = "";
+    /* imitation of backend credential check */
+    console.log(email, password);
+    await sleep(1000);
+
+    awaiting2FA.value = true;
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error("Authentication failed:", err.message);
+      error.value = err.message;
+    } else {
+      const fallbackError = "Wystąpił nieoczekiwany błąd.";
+      console.error("An unexpected error occurred:", err);
+      error.value = fallbackError;
+    }
+  } finally {
+    loading.value = false;
+    userDetails.value.password = "";
+  }
 }
 </script>
 
@@ -64,6 +102,13 @@ async function handleSubmit() {
         Weryfikacja dwuetapowa
       </h1>
     </div>
+    <div
+      v-if="error"
+      class="flex w-full flex-col items-center justify-center gap-2 rounded-md border-1 border-red-900 bg-red-800/40 p-3 text-sm font-bold text-white shadow-md backdrop-blur-sm"
+    >
+      <CircleX :size="20" />
+      <p class="text-center">{{ error }}</p>
+    </div>
     <form
       v-if="!awaiting2FA"
       @submit.prevent="handleSubmit"
@@ -73,7 +118,6 @@ async function handleSubmit() {
         v-model="userDetails.email"
         autofocus
         required
-        type="email"
         placeholder="Adres e-mail"
         class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
       />
@@ -95,12 +139,15 @@ async function handleSubmit() {
           />
           <label for="remember">Zapamiętaj mnie</label>
         </div>
-        <a href="/forgot-password" class="hover:underline"
+        <a
+          href="/forgot-password"
+          class="decoration-red-800/50 decoration-3 hover:underline"
           >Zapomniałeś hasło?</a
         >
       </div>
       <Button
         id="submit"
+        :disabled="loading"
         class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
         >Logowanie</Button
       >
@@ -114,6 +161,7 @@ async function handleSubmit() {
         id="pin-input"
         otp
         type="number"
+        :disabled="loading"
         v-model="userDetails.pin"
         @complete="handleComplete"
       >
@@ -128,9 +176,10 @@ async function handleSubmit() {
       </PinInput>
       <p
         @click="awaiting2FA = false"
-        class="cursor-pointer text-sm font-bold text-white text-shadow-md hover:underline"
+        class="flex cursor-pointer items-center gap-1 text-white hover:underline"
       >
-        Powrót do logowania
+        <ChevronLeft color="white" />
+        <span>Powrót do logowania</span>
       </p>
     </div>
   </div>
