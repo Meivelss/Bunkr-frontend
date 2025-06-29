@@ -122,7 +122,9 @@ async function handleSubmit() {
       <div
         class="flex w-full items-center justify-between gap-x-2 text-sm text-gray-200"
       >
-        <div class="flex items-center gap-x-2">
+        <div
+          class="decoration-primary/50 flex items-center gap-x-2 decoration-3 underline-offset-2 hover:underline [&>*]:cursor-pointer"
+        >
           <Checkbox
             class="data-[state=checked]:bg-secondary/50"
             id="remember"
@@ -132,7 +134,7 @@ async function handleSubmit() {
         </div>
         <a
           href="/forgot-password"
-          class="decoration-secondary/50 decoration-4 underline-offset-4 hover:underline"
+          class="decoration-primary/50 decoration-3 underline-offset-2 hover:underline"
           >Zapomniałeś hasło?</a
         >
       </div>
