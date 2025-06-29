@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronLeft, CircleX } from "lucide-vue-next";
+import { Lock, Mail, Eye } from "lucide-vue-next";
 import isValidEmail from "@/utils/isValidEmail";
 import {
   PinInput,
   PinInputGroup,
   PinInputSlot,
 } from "@/components/ui/pin-input";
+import AuthPane from "@/components/custom/AuthPane.vue";
+import AuthError from "@/components/custom/AuthError.vue";
+import AuthButton from "@/components/custom/AuthButton.vue";
+import AuthInput from "@/components/custom/AuthInput.vue";
+import AuthGoBack from "@/components/custom/AuthGoBack.vue";
 
 const userDetails = ref({
   email: "",
@@ -93,43 +97,42 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div class="flex w-full flex-col space-y-4 select-none">
-    <div class="flex w-full">
-      <h1 v-if="!awaiting2FA" class="text-4xl font-bold text-white">
-        Zaloguj się
-      </h1>
-      <h1 v-else class="text-4xl font-bold text-white">
-        Weryfikacja dwuetapowa
-      </h1>
-    </div>
-    <div
-      v-if="error"
-      class="flex w-full flex-col items-center justify-center gap-2 rounded-md border-1 border-red-900 bg-red-800/40 p-3 text-sm font-bold text-white shadow-md backdrop-blur-sm"
-    >
-      <CircleX :size="20" />
-      <p class="text-center">{{ error }}</p>
-    </div>
+  <AuthPane head="Logowanie">
+    <AuthError :error="error" v-if="error" />
     <form
       v-if="!awaiting2FA"
       @submit.prevent="handleSubmit"
-      class="w-full space-y-2"
+      class="w-full space-y-4"
     >
-      <Input
+      <AuthInput
         v-model="userDetails.email"
-        autofocus
-        required
+        id="email"
         placeholder="Adres e-mail"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
-      />
-      <Input
-        v-model="userDetails.password"
-        required
-        type="password"
-        placeholder="Hasło"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
-      />
+      >
+        <Mail class="size-6 stroke-1 text-neutral-400" />
+      </AuthInput>
+      <div class="relative w-full max-w-sm items-center">
+        <Input
+          v-model="userDetails.password"
+          required
+          type="password"
+          placeholder="Hasło"
+          class="w-full border-1 border-gray-500/50 bg-white/15 px-10 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
+        />
+        <span
+          class="absolute inset-y-0 start-0 flex items-center justify-center px-2"
+        >
+          <Lock class="size-6 stroke-1 text-gray-400" />
+        </span>
+        <button
+          type="button"
+          class="absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center px-2"
+        >
+          <Eye class="size-6 text-gray-400" />
+        </button>
+      </div>
       <div
-        class="flex h-9 w-full items-center justify-between gap-x-2 text-sm text-gray-200"
+        class="flex w-full items-center justify-between gap-x-2 text-sm text-gray-200"
       >
         <div class="flex items-center gap-x-2">
           <Checkbox
@@ -141,16 +144,11 @@ async function handleSubmit() {
         </div>
         <a
           href="/forgot-password"
-          class="decoration-secondary/50 decoration-3 hover:underline"
+          class="decoration-secondary/50 decoration-4 underline-offset-4 hover:underline"
           >Zapomniałeś hasło?</a
         >
       </div>
-      <Button
-        id="submit"
-        :disabled="loading"
-        class="bg-secondary/50 hover:text-secondary hover:bg-primary/80 w-full text-white shadow-md backdrop-blur-sm"
-        >Logowanie</Button
-      >
+      <AuthButton label="Zaloguj" :disabled="loading" />
     </form>
     <div v-if="awaiting2FA" class="space-y-6">
       <p class="text-sm text-white">
@@ -174,13 +172,7 @@ async function handleSubmit() {
           />
         </PinInputGroup>
       </PinInput>
-      <p
-        @click="awaiting2FA = false"
-        class="flex cursor-pointer items-center gap-1 text-white hover:underline"
-      >
-        <ChevronLeft class="text-primary" />
-        <span>Powrót do logowania</span>
-      </p>
+      <AuthGoBack label="Powrót do logowania" @click="awaiting2FA = false" />
     </div>
-  </div>
+  </AuthPane>
 </template>
