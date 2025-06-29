@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-vue-next";
 import { Mail } from "lucide-vue-next";
 import isValidEmail from "@/utils/isValidEmail";
+import AuthPane from "./custom/AuthPane.vue";
+import AuthError from "@/components/custom/AuthError.vue";
+import AuthButton from "@/components/custom/AuthButton.vue";
+import AuthInput from "@/components/custom/AuthInput.vue";
+import AuthGoBack from "@/components/custom/AuthGoBack.vue";
 
 const userDetails = ref({
   email: "",
@@ -36,12 +40,9 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div
-    v-if="submitted"
-    class="flex flex-col items-center justify-center gap-4 text-white"
-  >
+  <AuthPane v-if="submitted" class="flex flex-col items-center">
     <Mail color="white" :stroke-width="1" :size="102" />
-    <div class="flex flex-col gap-2 text-center">
+    <div class="flex flex-col gap-2 text-center text-white">
       <p>sprawdź majla, wysłaliśmy link pod adres:</p>
       <p class="text-2xl font-bold">{{ userDetails.email }}</p>
       <p>
@@ -53,30 +54,26 @@ async function handleSubmit() {
       <ChevronLeft color="white" />
       <span>Powrót do logowania</span>
     </a>
-  </div>
-  <div v-else class="flex w-full flex-col space-y-4 select-none">
-    <div class="flex w-full">
-      <h1 class="text-4xl font-bold text-white">i forgor</h1>
-    </div>
+  </AuthPane>
+  <AuthPane
+    head="i forgor"
+    v-else
+    class="flex w-full flex-col space-y-4 select-none"
+  >
     <form @submit.prevent="handleSubmit" class="w-full space-y-4">
       <p class="text-sm text-white">
         W poniższe pole wpisz adres e-mail przypisany do twojego konta i kliknij
         w zawarty w nim link, aby zresetować hasło.
         <br />Następnie postępuj zgodnie z informacjami w linku.
       </p>
-      <Input
+      <AuthInput
         v-model="userDetails.email"
-        autofocus
-        required
+        id="email"
         placeholder="Adres e-mail"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
-      />
-      <Button
-        id="submit"
-        :disabled="loading"
-        class="bg-secondary/50 hover:text-secondary hover:bg-primary/80 w-full text-white shadow-md backdrop-blur-sm"
-        >Reset hasła</Button
       >
+        <Mail class="size-6 stroke-1 text-neutral-400" />
+      </AuthInput>
+      <AuthButton id="submit" label="Reset Hasła" :disabled="loading" />
       <a
         href="/login"
         class="flex items-center gap-1 text-white hover:underline"
@@ -85,5 +82,5 @@ async function handleSubmit() {
         <span>Powrót do logowania</span>
       </a>
     </form>
-  </div>
+  </AuthPane>
 </template>
