@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Input } from "@/components/ui/input";
-import { Lock, Eye } from "lucide-vue-next";
+import { Lock, Eye, EyeClosed } from "lucide-vue-next";
+import { ref } from "vue";
 const props = defineProps({
   modelValue: {
     type: String,
@@ -26,6 +27,12 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
+const showPassword = ref(false);
+
+const toggleShowPassword = () => {
+  showPassword.value = !showPassword.value;
+};
+
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
   emit("update:modelValue", target.value);
@@ -41,7 +48,7 @@ const handleInput = (event: Event) => {
       :value="props.modelValue"
       @input="handleInput"
       :required="required"
-      type="password"
+      :type="showPassword ? 'text' : 'password'"
       :placeholder="props.placeholder"
       class="w-full border-1 border-gray-500/50 bg-white/15 px-10 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
     />
@@ -52,9 +59,11 @@ const handleInput = (event: Event) => {
     </span>
     <button
       type="button"
+      @click="toggleShowPassword"
       class="absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center px-2"
     >
-      <Eye class="size-6 stroke-1 text-gray-400" />
+      <Eye v-if="showPassword" class="size-6 stroke-1 text-gray-400" />
+      <EyeClosed v-else class="size-6 stroke-1 text-gray-400" />
     </button>
   </div>
   <div v-else class="relative w-full max-w-sm items-center">
