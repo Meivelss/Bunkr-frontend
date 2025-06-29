@@ -60,10 +60,16 @@ const handleInput = (event: Event) => {
     <button
       type="button"
       @click="toggleShowPassword"
-      class="absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center px-2"
+      class="group absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center px-2"
     >
-      <Eye v-if="showPassword" class="size-6 stroke-1 text-gray-400" />
-      <EyeOff v-else class="size-6 stroke-1 text-gray-400" />
+      <Eye
+        v-if="showPassword"
+        class="group-hover:text-primary size-6 stroke-1 text-gray-400 transition-all group-hover:stroke-2"
+      />
+      <EyeOff
+        v-else
+        class="group-hover:text-primary size-6 stroke-1 text-gray-400 transition-all group-hover:stroke-2"
+      />
     </button>
   </div>
   <div v-else class="relative w-full max-w-sm items-center">

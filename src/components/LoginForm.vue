@@ -122,21 +122,25 @@ async function handleSubmit() {
       <div
         class="flex w-full items-center justify-between gap-x-2 text-sm text-gray-200"
       >
-        <div
-          class="decoration-primary/50 flex items-center gap-x-2 decoration-3 underline-offset-2 hover:underline [&>*]:cursor-pointer"
-        >
+        <div class="group flex items-center gap-x-2 [&>*]:cursor-pointer">
           <Checkbox
             class="data-[state=checked]:bg-secondary/50"
             id="remember"
             v-model="userDetails.rememberMe"
           />
-          <label for="remember">Zapamiętaj mnie</label>
+          <label
+            class="before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-300 group-hover:before:scale-x-100"
+            for="remember"
+          >
+            Zapamiętaj mnie
+          </label>
         </div>
         <a
           href="/forgot-password"
-          class="decoration-primary/50 decoration-3 underline-offset-2 hover:underline"
-          >Zapomniałeś hasło?</a
+          class="before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100"
         >
+          Zapomniałeś hasło?
+        </a>
       </div>
       <AuthButton label="Zaloguj" :disabled="loading" />
     </form>

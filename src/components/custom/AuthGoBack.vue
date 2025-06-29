@@ -29,21 +29,28 @@ const handleClick = () => {
   <a
     v-if="props.href"
     :href="props.href"
-    :class="['flex items-center gap-1 text-white hover:underline', props.class]"
+    :class="['group flex items-center gap-1 text-white', props.class]"
   >
     <ChevronLeft class="text-primary" />
-    <span>{{ props.label }}</span>
+    <span
+      class="before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-200 group-hover:before:scale-x-100"
+    >
+      {{ props.label }}
+    </span>
   </a>
 
   <p
     v-else
     @click="handleClick"
     :class="[
-      'flex cursor-pointer items-center gap-1 text-white hover:underline',
+      'group flex cursor-pointer items-center gap-1 text-white',
       props.class,
     ]"
   >
     <ChevronLeft class="text-primary" />
-    <span>{{ props.label }}</span>
+    <span
+      class="before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-200 group-hover:before:scale-x-100"
+      >{{ props.label }}</span
+    >
   </p>
 </template>
