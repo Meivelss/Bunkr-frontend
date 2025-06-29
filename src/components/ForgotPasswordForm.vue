@@ -16,6 +16,7 @@ const userDetails = ref({
 
 const loading = ref(false);
 const submitted = ref(false);
+const error = ref("");
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -23,25 +24,39 @@ function sleep(ms: number) {
 
 /* called on form submit */
 async function handleSubmit() {
+  error.value = "";
   loading.value = true;
 
-  console.log("email:", userDetails.value.email);
+  try {
+    const email = userDetails.value.email.trim();
 
-  userDetails.value.email = userDetails.value.email.trim();
+    console.log("email:", email);
 
-  /* TODO: display feedback to screen */
-  console.log("looks correct:", isValidEmail(userDetails.value.email));
+    if (!isValidEmail(email)) {
+      throw new Error("Wprowadź prawidłowy adres e-mail.");
+    }
 
-  await sleep(2000);
+    await sleep(2000);
 
-  loading.value = false;
-  submitted.value = true;
+    submitted.value = true;
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error("Authentication failed:", err.message);
+      error.value = err.message;
+    } else {
+      const fallbackError = "Wystąpił nieoczekiwany błąd.";
+      console.error("An unexpected error occurred:", err);
+      error.value = fallbackError;
+    }
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 
 <template>
   <AuthPane v-if="submitted" class="flex flex-col items-center">
-    <Mail color="white" :stroke-width="1" :size="102" />
+    <Mail class="text-primary" :stroke-width="1" :size="102" />
     <div class="flex flex-col gap-2 text-center text-white">
       <p>sprawdź majla, wysłaliśmy link pod adres:</p>
       <p class="text-2xl font-bold">{{ userDetails.email }}</p>
@@ -57,6 +72,7 @@ async function handleSubmit() {
     v-else
     class="flex w-full flex-col space-y-4 select-none"
   >
+    <AuthError :error="error" v-if="error" />
     <form @submit.prevent="handleSubmit" class="w-full space-y-4">
       <p class="text-sm text-white">
         W poniższe pole wpisz adres e-mail przypisany do twojego konta i kliknij
