@@ -7,6 +7,7 @@ import { CircleX } from "lucide-vue-next";
 import AuthPane from "@/components/custom/AuthPane.vue";
 import AuthButton from "@/components/custom/AuthButton.vue";
 import AuthGoBack from "@/components/custom/AuthGoBack.vue";
+import AuthInput from "./custom/AuthInput.vue";
 
 const loading = ref(false);
 const password = ref("");
@@ -74,19 +75,17 @@ async function handleSubmit() {
       Ustal nowe hasło, tym razem nie zapomnij B)
     </p>
     <form @submit.prevent="handleSubmit" class="w-full space-y-4">
-      <Input
+      <AuthInput
         v-model="password"
         required
         type="password"
         placeholder="Hasło"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
       />
-      <Input
+      <AuthInput
         v-model="repeatPassword"
         required
         type="password"
         placeholder="Powtórz Hasło"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
       />
       <AuthButton id="submit" label="Zmień hasło" :disabled="loading" />
     </form>

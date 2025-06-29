@@ -112,26 +112,13 @@ async function handleSubmit() {
       >
         <Mail class="size-6 stroke-1 text-neutral-400" />
       </AuthInput>
-      <div class="relative w-full max-w-sm items-center">
-        <Input
-          v-model="userDetails.password"
-          required
-          type="password"
-          placeholder="Hasło"
-          class="w-full border-1 border-gray-500/50 bg-white/15 px-10 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
-        />
-        <span
-          class="absolute inset-y-0 start-0 flex items-center justify-center px-2"
-        >
-          <Lock class="size-6 stroke-1 text-gray-400" />
-        </span>
-        <button
-          type="button"
-          class="absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center px-2"
-        >
-          <Eye class="size-6 text-gray-400" />
-        </button>
-      </div>
+      <AuthInput
+        v-model="userDetails.password"
+        id="password"
+        required
+        type="password"
+        placeholder="Hasło"
+      />
       <div
         class="flex w-full items-center justify-between gap-x-2 text-sm text-gray-200"
       >
