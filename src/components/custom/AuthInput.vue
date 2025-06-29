@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Input } from "@/components/ui/input";
-import { Lock, Eye, EyeClosed } from "lucide-vue-next";
+import { Lock, Eye, EyeOff } from "lucide-vue-next";
 import { ref } from "vue";
 const props = defineProps({
   modelValue: {
@@ -63,7 +63,7 @@ const handleInput = (event: Event) => {
       class="absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center px-2"
     >
       <Eye v-if="showPassword" class="size-6 stroke-1 text-gray-400" />
-      <EyeClosed v-else class="size-6 stroke-1 text-gray-400" />
+      <EyeOff v-else class="size-6 stroke-1 text-gray-400" />
     </button>
   </div>
   <div v-else class="relative w-full max-w-sm items-center">
