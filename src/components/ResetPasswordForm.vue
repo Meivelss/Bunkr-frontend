@@ -73,7 +73,7 @@ async function handleSubmit() {
     <p class="text-sm text-white">
       Ustal nowe hasło, tym razem nie zapomnij B)
     </p>
-    <form @submit.prevent="handleSubmit" class="w-full space-y-2">
+    <form @submit.prevent="handleSubmit" class="w-full space-y-4">
       <Input
         v-model="password"
         required

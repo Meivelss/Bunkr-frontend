@@ -107,6 +107,7 @@ async function handleSubmit() {
       <AuthInput
         v-model="userDetails.email"
         id="email"
+        required
         placeholder="Adres e-mail"
       >
         <Mail class="size-6 stroke-1 text-neutral-400" />

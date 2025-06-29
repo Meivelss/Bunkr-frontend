@@ -5,6 +5,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  required: {
+    type: Boolean,
+    required: false,
+  },
   placeholder: {
     type: String,
     required: false,
@@ -28,6 +32,7 @@ const handleInput = (event: Event) => {
     <Input
       :value="props.modelValue"
       @input="handleInput"
+      :required="required"
       type="text"
       :placeholder="props.placeholder"
       :class="
