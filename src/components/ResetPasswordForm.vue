@@ -6,6 +6,7 @@ import { ShieldCheck } from "lucide-vue-next";
 import { CircleX } from "lucide-vue-next";
 import AuthPane from "@/components/custom/AuthPane.vue";
 import AuthButton from "@/components/custom/AuthButton.vue";
+import AuthGoBack from "@/components/custom/AuthGoBack.vue";
 
 const loading = ref(false);
 const password = ref("");
@@ -56,10 +57,7 @@ async function handleSubmit() {
         Reset hasła powiódł się, możesz teraz zalogować się swoim nowym hasłem.
       </p>
     </div>
-    <a href="/login" class="flex items-center gap-1 text-white hover:underline">
-      <ChevronLeft class="text-primary" />
-      <span>Powrót do logowania</span>
-    </a>
+    <AuthGoBack label="Powrót do logowania" href="/login" />
   </AuthPane>
   <AuthPane v-else>
     <div class="flex w-full">
@@ -92,9 +90,6 @@ async function handleSubmit() {
       />
       <AuthButton id="submit" label="Zmień hasło" :disabled="loading" />
     </form>
-    <a href="/login" class="flex items-center gap-1 text-white hover:underline">
-      <ChevronLeft class="text-primary" />
-      <span>Powrót do logowania</span>
-    </a>
+    <AuthGoBack label="Powrót do logowania" href="/login" />
   </AuthPane>
 </template>

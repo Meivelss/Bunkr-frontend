@@ -50,10 +50,7 @@ async function handleSubmit() {
         resetu hasła.
       </p>
     </div>
-    <a href="/login" class="flex items-center gap-1 text-white hover:underline">
-      <ChevronLeft color="white" />
-      <span>Powrót do logowania</span>
-    </a>
+    <AuthGoBack label="Powrót do logowania" href="/login" />
   </AuthPane>
   <AuthPane
     head="i forgor"
@@ -74,13 +71,7 @@ async function handleSubmit() {
         <Mail class="size-6 stroke-1 text-neutral-400" />
       </AuthInput>
       <AuthButton id="submit" label="Reset Hasła" :disabled="loading" />
-      <a
-        href="/login"
-        class="flex items-center gap-1 text-white hover:underline"
-      >
-        <ChevronLeft class="text-primary" />
-        <span>Powrót do logowania</span>
-      </a>
+      <AuthGoBack label="Powrót do logowania" href="/login" />
     </form>
   </AuthPane>
 </template>
