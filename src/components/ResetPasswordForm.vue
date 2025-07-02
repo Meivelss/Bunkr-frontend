@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-vue-next";
 import { ShieldCheck } from "lucide-vue-next";
 import { CircleX } from "lucide-vue-next";
+import AuthPane from "@/components/custom/AuthPane.vue";
+import AuthButton from "@/components/custom/AuthButton.vue";
+import AuthGoBack from "@/components/custom/AuthGoBack.vue";
+import AuthInput from "./custom/AuthInput.vue";
 
 const loading = ref(false);
 const password = ref("");
@@ -27,9 +30,6 @@ async function handleSubmit() {
       throw new Error("Hasło jest za krótkie");
     }
 
-    /* if all is good, we should display a happy popup saying the user can log in now */
-
-    /* take user to login page */
     success.value = true;
   } catch (err) {
     if (err instanceof Error) {
@@ -48,22 +48,19 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div
+  <AuthPane
     v-if="success"
     class="flex flex-col items-center justify-center gap-4 text-white"
   >
-    <ShieldCheck color="white" :stroke-width="1" :size="102" />
+    <ShieldCheck class="text-primary" :stroke-width="1" :size="102" />
     <div class="flex flex-col gap-2 text-center">
       <p>
         Reset hasła powiódł się, możesz teraz zalogować się swoim nowym hasłem.
       </p>
     </div>
-    <a href="/login" class="flex items-center gap-1 text-white hover:underline">
-      <ChevronLeft color="white" />
-      <span>Powrót do logowania</span>
-    </a>
-  </div>
-  <div v-else class="flex w-full flex-col space-y-4 select-none">
+    <AuthGoBack label="Powrót do logowania" href="/login" />
+  </AuthPane>
+  <AuthPane v-else>
     <div class="flex w-full">
       <h1 class="text-4xl font-bold text-white">Nowe hasło</h1>
     </div>
@@ -77,30 +74,21 @@ async function handleSubmit() {
     <p class="text-sm text-white">
       Ustal nowe hasło, tym razem nie zapomnij B)
     </p>
-    <form @submit.prevent="handleSubmit" class="w-full space-y-2">
-      <Input
+    <form @submit.prevent="handleSubmit" class="w-full space-y-4">
+      <AuthInput
         v-model="password"
         required
         type="password"
         placeholder="Hasło"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
       />
-      <Input
+      <AuthInput
         v-model="repeatPassword"
         required
         type="password"
         placeholder="Powtórz Hasło"
-        class="w-full border-1 border-gray-500/50 bg-white/15 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
       />
-      <Button
-        id="submit"
-        class="w-full bg-red-800/50 text-white shadow-md backdrop-blur-sm hover:bg-white/80 hover:text-red-800"
-        >Zmień hasło</Button
-      >
+      <AuthButton id="submit" label="Zmień hasło" :disabled="loading" />
     </form>
-    <a href="/login" class="flex items-center gap-1 text-white hover:underline">
-      <ChevronLeft color="white" />
-      <span>Powrót do logowania</span>
-    </a>
-  </div>
+    <AuthGoBack label="Powrót do logowania" href="/login" />
+  </AuthPane>
 </template>
