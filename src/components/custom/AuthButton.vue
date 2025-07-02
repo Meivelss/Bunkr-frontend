@@ -21,7 +21,7 @@ const props = defineProps({
     id="submit"
     :disabled="props.disabled"
     :class="[
-      'bg-secondary/60 hover:text-secondary hover:bg-primary/80 border-secondary/10 w-full border-1 text-white shadow-sm shadow-black/40 backdrop-blur-sm',
+      'font-body bg-secondary/60 hover:text-secondary hover:bg-primary/80 border-secondary/10 w-full border-1 text-white shadow-sm shadow-black/40 backdrop-blur-sm',
       props.class,
     ]"
     >{{ props.label }}</Button

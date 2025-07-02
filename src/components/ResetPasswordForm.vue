@@ -54,7 +54,7 @@ async function handleSubmit() {
   >
     <ShieldCheck class="text-primary" :stroke-width="1" :size="102" />
     <div class="flex flex-col gap-2 text-center">
-      <p>
+      <p class="font-body">
         Reset hasła powiódł się, możesz teraz zalogować się swoim nowym hasłem.
       </p>
     </div>
@@ -71,7 +71,7 @@ async function handleSubmit() {
       <CircleX :size="20" />
       <p class="text-center">{{ error }}</p>
     </div>
-    <p class="text-sm text-white">
+    <p class="font-body text-sm text-white">
       Ustal nowe hasło, tym razem nie zapomnij B)
     </p>
     <form @submit.prevent="handleSubmit" class="w-full space-y-4">
