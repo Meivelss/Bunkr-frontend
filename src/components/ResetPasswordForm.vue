@@ -60,7 +60,7 @@ async function handleSubmit() {
     </div>
     <a href="/login" class="flex items-center gap-1 text-white hover:underline">
       <ChevronLeft color="white" />
-      <span class="font-exo">Powrót do logowania</span>
+      <span class="font-text">Powrót do logowania</span>
     </a>
   </div>
   <div v-else class="flex w-full flex-col space-y-4 select-none">
@@ -100,7 +100,7 @@ async function handleSubmit() {
     </form>
     <a href="/login" class="flex items-center gap-1 text-white hover:underline">
       <ChevronLeft color="white" />
-      <span class="font-exo">Powrót do logowania</span>
+      <span class="font-text">Powrót do logowania</span>
     </a>
   </div>
 </template>
