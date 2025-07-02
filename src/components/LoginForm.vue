@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Lock, Mail, Eye } from "lucide-vue-next";
+import { Mail } from "lucide-vue-next";
 import isValidEmail from "@/utils/isValidEmail";
 import {
   PinInput,
@@ -129,7 +128,7 @@ async function handleSubmit() {
             v-model="userDetails.rememberMe"
           />
           <label
-            class="before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-300 group-hover:before:scale-x-100"
+            class="font-body before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-300 group-hover:before:scale-x-100"
             for="remember"
           >
             Zapamiętaj mnie
@@ -137,7 +136,7 @@ async function handleSubmit() {
         </div>
         <a
           href="/forgot-password"
-          class="before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100"
+          class="font-body before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-300 hover:before:scale-x-100"
         >
           Zapomniałeś hasło?
         </a>
@@ -145,7 +144,7 @@ async function handleSubmit() {
       <AuthButton label="Zaloguj" :disabled="loading" />
     </form>
     <div v-if="awaiting2FA" class="space-y-6">
-      <p class="text-sm text-white">
+      <p class="font-body text-sm text-white">
         Sprawdź swoją skrzynkę mailową. W przeciągu paru minut dostaniesz od nas
         wiadomość. <br />W powyższe pola przepisz sześciocyfrowy kod.
       </p>
@@ -159,7 +158,7 @@ async function handleSubmit() {
       >
         <PinInputGroup class="flex w-full justify-between">
           <PinInputSlot
-            class="rounded-md border border-gray-500 bg-white/15 text-lg text-white shadow-md backdrop-blur-xs"
+            class="font-body rounded-md border border-gray-500 bg-white/15 text-lg text-white shadow-md backdrop-blur-xs"
             v-for="(id, index) in 6"
             :key="id"
             :index="index"

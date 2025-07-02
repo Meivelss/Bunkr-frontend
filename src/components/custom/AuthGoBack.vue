@@ -33,7 +33,7 @@ const handleClick = () => {
   >
     <ChevronLeft class="text-primary" />
     <span
-      class="before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-200 group-hover:before:scale-x-100"
+      class="font-body before:bg-primary relative inline-block before:absolute before:-bottom-0.25 before:left-0 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:transition-transform before:duration-200 group-hover:before:scale-x-100"
     >
       {{ props.label }}
     </span>

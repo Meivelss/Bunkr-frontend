@@ -50,7 +50,7 @@ const handleInput = (event: Event) => {
       :required="required"
       :type="showPassword ? 'text' : 'password'"
       :placeholder="props.placeholder"
-      class="w-full border-1 border-gray-500/50 bg-white/15 px-10 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
+      class="font-body placeholder:font-body w-full border-1 border-gray-500/50 bg-white/15 px-10 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400"
     />
     <span
       class="absolute inset-y-0 start-0 flex items-center justify-center px-2"
@@ -80,7 +80,7 @@ const handleInput = (event: Event) => {
       type="text"
       :placeholder="props.placeholder"
       :class="
-        'w-full border-1 border-gray-500/50 bg-white/15 pl-10 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400' +
+        'font-body placeholder:font-body w-full border-1 border-gray-500/50 bg-white/15 pl-10 text-white shadow-md backdrop-blur-xs placeholder:text-gray-400' +
         props.class
       "
     />

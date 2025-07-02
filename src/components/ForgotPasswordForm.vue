@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-vue-next";
 import { Mail } from "lucide-vue-next";
 import isValidEmail from "@/utils/isValidEmail";
 import AuthPane from "./custom/AuthPane.vue";
@@ -58,9 +56,9 @@ async function handleSubmit() {
   <AuthPane v-if="submitted" class="flex flex-col items-center">
     <Mail class="text-primary" :stroke-width="1" :size="102" />
     <div class="flex flex-col gap-2 text-center text-white">
-      <p>sprawdź majla, wysłaliśmy link pod adres:</p>
-      <p class="text-2xl font-bold">{{ userDetails.email }}</p>
-      <p class="font-text">
+      <p class="font-body">sprawdź majla, wysłaliśmy link pod adres:</p>
+      <p class="font-body text-2xl font-bold">{{ userDetails.email }}</p>
+      <p class="font-body">
         jeśli wpisany przez ciebie adres jest poprawny, dostaniesz tam link do
         resetu hasła.
       </p>
@@ -74,7 +72,7 @@ async function handleSubmit() {
   >
     <AuthError :error="error" v-if="error" />
     <form @submit.prevent="handleSubmit" class="w-full space-y-4">
-      <p class="text-sm text-white font-text">
+      <p class="font-body text-sm text-white">
         W poniższe pole wpisz adres e-mail przypisany do twojego konta i kliknij
         w zawarty w nim link, aby zresetować hasło.
         <br />Następnie postępuj zgodnie z informacjami w linku.
