@@ -1,12 +1,30 @@
 ---
 // Component Imports
 import Layout from "../layouts/Layout.astro";
+import { Input } from "@/components/ui/input";
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/basics/astro-components/
 ---
 
+<!-- Mock layout -->
 <Layout>
-  <a href="/login">login page uwu</a>
-  <a href="/test">test page</a>
+  <!-- navbar -->
+  <div
+    class="relative h-full w-96 border-r-1 border-white/20 bg-white/6 p-8 shadow-lg shadow-black/10 outline-1 outline-black/10 backdrop-blur-lg select-none"
+  >
+    <div class="flex flex-col items-center justify-center">
+      <a href="/login">login page uwu</a>
+      <a href="/test">test page</a>
+    </div>
+  </div>
+
+  <div class="flex-1 overflow-auto">
+    <div class="h-full bg-white p-6">
+      <div class="flex h-full w-full justify-between">
+        <div class="h-10 w-xl bg-red-500"></div>
+        <Input class="w-md" />
+      </div>
+    </div>
+  </div>
 </Layout>
