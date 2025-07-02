@@ -43,7 +43,7 @@ const handleClick = () => {
     v-else
     @click="handleClick"
     :class="[
-      'group flex cursor-pointer items-center gap-1 text-white',
+      'font-body group flex cursor-pointer items-center gap-1 text-white',
       props.class,
     ]"
   >
