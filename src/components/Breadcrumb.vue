@@ -19,21 +19,15 @@ import {
       <BreadcrumbItem>
         <BreadcrumbPage>Fredi</BreadcrumbPage>
       </BreadcrumbItem>
-      <BreadcrumbSeparator>
-        <Slash />
-      </BreadcrumbSeparator>
+      <BreadcrumbSeparator> / </BreadcrumbSeparator>
       <BreadcrumbItem>
         <BreadcrumbPage>Kamionka</BreadcrumbPage>
       </BreadcrumbItem>
-      <BreadcrumbSeparator>
-        <Slash />
-      </BreadcrumbSeparator>
+      <BreadcrumbSeparator> / </BreadcrumbSeparator>
       <BreadcrumbItem>
         <BreadcrumbPage>Gmina</BreadcrumbPage>
       </BreadcrumbItem>
-      <BreadcrumbSeparator>
-        <Slash />
-      </BreadcrumbSeparator>
+      <BreadcrumbSeparator> / </BreadcrumbSeparator>
       <BreadcrumbItem>
         <BreadcrumbPage>Burzenin</BreadcrumbPage>
       </BreadcrumbItem>

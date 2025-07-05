@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { HTMLAttributes } from "vue";
 import { cn } from "@/lib/utils";
 
@@ -8,15 +8,15 @@ const props = defineProps<{
 </script>
 
 <template>
-  <ol
-    data-slot="breadcrumb-list"
+  <tr
+    data-slot="table-row"
     :class="
       cn(
-        'text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5',
+        'hover:bg-muted/50 data-[state=selected]:bg-muted transition-colors',
         props.class,
       )
     "
   >
     <slot />
-  </ol>
+  </tr>
 </template>
