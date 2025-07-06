@@ -1,203 +1,155 @@
 <script setup lang="ts">
-import type {
-  ColumnDef,
-  ColumnFiltersState,
-  ExpandedState,
-  SortingState,
-  VisibilityState,
-} from "@tanstack/vue-table";
 import {
   FlexRender,
   getCoreRowModel,
-  getExpandedRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
   useVueTable,
+  createColumnHelper,
 } from "@tanstack/vue-table";
-import { ArrowUpDown } from "lucide-vue-next";
-import { h, ref } from "vue";
-import { valueUpdater } from "@/utils/valueUpdater";
-import paymentsData from "./payments.json";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import defaultData from "@/components/tableData.json";
+import { ref } from "vue";
 
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
-export interface Payment {
-  id: string;
-  amount: number;
+type User = {
+  firstName: string;
+  lastName: string;
+  age: number;
+  visits: number;
+  progress: number;
   status: string;
-  email: string;
-}
+};
 
-const data = ref<Payment[]>(paymentsData);
+const columnHelper = createColumnHelper<User>();
+const pageSizes = [8, 10, 12, 16, 20];
+const data = ref(defaultData);
 
-const columns: ColumnDef<Payment>[] = [
-  {
-    accessorKey: "status",
-    header: "STATUS",
-    cell: ({ row }) =>
-      h("div", { class: "capitalize" }, row.getValue("status")),
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => {
-      return h(
-        Button,
-        {
-          variant: "ghost",
-          class: "font-bold",
-          onClick: () => column.toggleSorting(column.getIsSorted() === "asc"),
-        },
-        () => ["EMAIL", h(ArrowUpDown, { class: "ml-2 h-4 w-4" })],
-      );
-    },
-    cell: ({ row }) => h("div", { class: "lowercase" }, row.getValue("email")),
-  },
-  {
-    accessorKey: "amount",
-    header: () => h("div", { class: "text-right" }, "AMOUNT"),
-    cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue("amount"));
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return h("div", { class: "text-right font-medium" }, formatted);
-    },
-  },
+const columns = [
+  columnHelper.group({
+    header: "Name",
+    footer: (props) => props.column.id,
+    columns: [
+      columnHelper.accessor("firstName", {
+        cell: (info) => info.getValue(),
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.accessor((row) => row.lastName, {
+        id: "lastName",
+        cell: (info) => info.getValue(),
+        header: () => "Last Name",
+        footer: (props) => props.column.id,
+      }),
+    ],
+  }),
+  columnHelper.group({
+    header: "Info",
+    footer: (props) => props.column.id,
+    columns: [
+      columnHelper.accessor("age", {
+        header: () => "Age",
+        footer: (props) => props.column.id,
+      }),
+      columnHelper.group({
+        header: "More Info",
+        columns: [
+          columnHelper.accessor("visits", {
+            header: () => "Visits",
+            footer: (props) => props.column.id,
+          }),
+          columnHelper.accessor("status", {
+            header: "Status",
+            footer: (props) => props.column.id,
+          }),
+          columnHelper.accessor("progress", {
+            header: "Profile Progress",
+            footer: (props) => props.column.id,
+          }),
+        ],
+      }),
+    ],
+  }),
 ];
 
-const sorting = ref<SortingState>([]);
-const columnFilters = ref<ColumnFiltersState>([]);
-const columnVisibility = ref<VisibilityState>({});
-const rowSelection = ref({});
-const expanded = ref<ExpandedState>({});
+const rerender = () => {
+  data.value = defaultData;
+};
 
 const table = useVueTable({
-  data,
+  get data() {
+    return data.value;
+  },
   columns,
   getCoreRowModel: getCoreRowModel(),
-  getPaginationRowModel: getPaginationRowModel(),
-  getSortedRowModel: getSortedRowModel(),
-  getFilteredRowModel: getFilteredRowModel(),
-  getExpandedRowModel: getExpandedRowModel(),
-  onSortingChange: (updaterOrValue) => valueUpdater(updaterOrValue, sorting),
-  onColumnFiltersChange: (updaterOrValue) =>
-    valueUpdater(updaterOrValue, columnFilters),
-  onColumnVisibilityChange: (updaterOrValue) =>
-    valueUpdater(updaterOrValue, columnVisibility),
-  onRowSelectionChange: (updaterOrValue) =>
-    valueUpdater(updaterOrValue, rowSelection),
-  onExpandedChange: (updaterOrValue) => valueUpdater(updaterOrValue, expanded),
-  state: {
-    get sorting() {
-      return sorting.value;
-    },
-    get columnFilters() {
-      return columnFilters.value;
-    },
-    get columnVisibility() {
-      return columnVisibility.value;
-    },
-    get rowSelection() {
-      return rowSelection.value;
-    },
-    get expanded() {
-      return expanded.value;
-    },
-  },
 });
 </script>
 
 <template>
-  <div>
-    <div class="">
-      <Table>
-        <TableHeader>
-          <TableRow
+  <div class="flex h-full w-full flex-col space-y-4">
+    <div class="flex items-center justify-between">
+      <h1 class="font-header text-2xl font-bold">{{ data.length }} wyników</h1>
+      <Input
+        placeholder="Szukaj"
+        class="font-body h-8 w-xs border-neutral-300 shadow-md"
+      />
+      <div class="flex items-center justify-center gap-2">
+        <Button
+          @click="rerender"
+          class="font-body bg-secondary hover:text-secondary h-8 w-auto font-bold text-white"
+          >Odśwież</Button
+        >
+        <Button
+          class="font-body bg-secondary hover:text-secondary h-8 w-auto font-bold text-white"
+          >Inny przycisk</Button
+        >
+        <Button
+          class="font-body bg-secondary hover:text-secondary h-8 w-auto font-bold text-white"
+          >Wolololo</Button
+        >
+      </div>
+    </div>
+    <div class="h-full w-full">
+      <table
+        class="font-body min-w-full divide-y divide-gray-200 text-left text-sm text-gray-700"
+      >
+        <thead
+          class="bg-gray-100 text-xs font-semibold text-gray-600 uppercase"
+        >
+          <tr
             v-for="headerGroup in table.getHeaderGroups()"
             :key="headerGroup.id"
           >
-            <TableHead v-for="header in headerGroup.headers" :key="header.id">
+            <th
+              v-for="header in headerGroup.headers"
+              :key="header.id"
+              :colSpan="header.colSpan"
+              class="px-4 py-3 text-left"
+            >
               <FlexRender
                 v-if="!header.isPlaceholder"
                 :render="header.column.columnDef.header"
                 :props="header.getContext()"
               />
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody class="font-body">
-          <template v-if="table.getRowModel().rows?.length">
-            <template
-              v-for="(row, i) in table.getRowModel().rows"
-              :key="row.id"
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr
+            v-for="row in table.getRowModel().rows"
+            :key="row.id"
+            class="transition-colors hover:bg-gray-50"
+          >
+            <td
+              v-for="cell in row.getVisibleCells()"
+              :key="cell.id"
+              class="px-4 py-2"
             >
-              <TableRow :data-state="row.getIsSelected() && 'selected'">
-                <TableCell
-                  v-for="cell in row.getVisibleCells()"
-                  :key="cell.id"
-                  :class="{
-                    'bg-primary/30': i % 2 === 1,
-                  }"
-                >
-                  <FlexRender
-                    :render="cell.column.columnDef.cell"
-                    :props="cell.getContext()"
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow v-if="row.getIsExpanded()">
-                <TableCell :colspan="row.getAllCells().length">
-                  {{ JSON.stringify(row.original) }}
-                </TableCell>
-              </TableRow>
-            </template>
-          </template>
-
-          <TableRow v-else>
-            <TableCell :colspan="columns.length" class="h-24 text-center">
-              No results.
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </div>
-
-    <div class="flex items-center justify-end space-x-2 py-4">
-      <div class="text-muted-foreground flex-1 text-sm">
-        {{ table.getFilteredSelectedRowModel().rows.length }} of
-        {{ table.getFilteredRowModel().rows.length }} row(s) selected.
-      </div>
-      <div class="space-x-2">
-        <Button
-          class="bg-secondary text-white"
-          size="sm"
-          :disabled="!table.getCanPreviousPage()"
-          @click="table.previousPage()"
-        >
-          Poprzednia Strona
-        </Button>
-        <Button
-          class="bg-secondary hover:text-secondary text-white"
-          size="sm"
-          :disabled="!table.getCanNextPage()"
-          @click="table.nextPage()"
-        >
-          Następna Strona
-        </Button>
-      </div>
+              <FlexRender
+                :render="cell.column.columnDef.cell"
+                :props="cell.getContext()"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
