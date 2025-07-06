@@ -1,14 +1,28 @@
 <script setup lang="ts">
 import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   FlexRender,
   getCoreRowModel,
+  getPaginationRowModel,
   useVueTable,
   createColumnHelper,
 } from "@tanstack/vue-table";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import DetailsButton from "./custom/Table/checkbox/DetailsButton.vue";
 import defaultData from "@/components/tableData.json";
-import { ref } from "vue";
+import { watch, ref, h } from "vue";
+import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-vue-next";
+
+// const INITIAL_PAGE_INDEX = 0;
 
 type User = {
   firstName: string;
@@ -20,58 +34,70 @@ type User = {
 };
 
 const columnHelper = createColumnHelper<User>();
+// const goToPageNumber = ref(INITIAL_PAGE_INDEX + 1);
 const pageSizes = [8, 10, 12, 16, 20];
 const data = ref(defaultData);
 
 const columns = [
-  columnHelper.group({
-    header: "Name",
+  columnHelper.accessor("firstName", {
+    cell: (info) => info.getValue(),
+    header: () => "First Name",
     footer: (props) => props.column.id,
-    columns: [
-      columnHelper.accessor("firstName", {
-        cell: (info) => info.getValue(),
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.accessor((row) => row.lastName, {
-        id: "lastName",
-        cell: (info) => info.getValue(),
-        header: () => "Last Name",
-        footer: (props) => props.column.id,
-      }),
-    ],
   }),
-  columnHelper.group({
-    header: "Info",
+  columnHelper.accessor((row) => row.lastName, {
+    id: "lastName",
+    cell: (info) => info.getValue(),
+    header: () => "Last Name",
     footer: (props) => props.column.id,
-    columns: [
-      columnHelper.accessor("age", {
-        header: () => "Age",
-        footer: (props) => props.column.id,
-      }),
-      columnHelper.group({
-        header: "More Info",
-        columns: [
-          columnHelper.accessor("visits", {
-            header: () => "Visits",
-            footer: (props) => props.column.id,
-          }),
-          columnHelper.accessor("status", {
-            header: "Status",
-            footer: (props) => props.column.id,
-          }),
-          columnHelper.accessor("progress", {
-            header: "Profile Progress",
-            footer: (props) => props.column.id,
-          }),
-        ],
-      }),
-    ],
   }),
+  columnHelper.accessor("age", {
+    header: () => "Age",
+    footer: (props) => props.column.id,
+  }),
+  columnHelper.accessor("visits", {
+    header: () => "Visits",
+    footer: (props) => props.column.id,
+  }),
+  columnHelper.accessor("status", {
+    header: "Status",
+    footer: (props) => props.column.id,
+  }),
+  columnHelper.accessor("progress", {
+    header: "Profile Progress",
+    footer: (props) => props.column.id,
+  }),
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: () =>
+      h(
+        "div",
+        {
+          class:
+            "flex justify-end group-hover:opacity-100 opacity-0 transition-opacity duration-300",
+        },
+        h(DetailsButton, {
+          class: "",
+          ariaLabel: "Row actions",
+        }),
+      ),
+  },
 ];
 
 const rerender = () => {
   data.value = defaultData;
 };
+
+// function handleGoToPage(e: any) {
+//   const page = e.target.value ? Number(e.target.value) - 1 : 0;
+//   goToPageNumber.value = page + 1;
+//   table.setPageIndex(page);
+// }
+
+// const handlePageSizeChange = (e: any) => {
+//   console.log("current page size: ", table.getState().pagination.pageSize);
+//   table.setPageSize(Number(e.target.value));
+// };
 
 const table = useVueTable({
   get data() {
@@ -79,6 +105,13 @@ const table = useVueTable({
   },
   columns,
   getCoreRowModel: getCoreRowModel(),
+  getPaginationRowModel: getPaginationRowModel(),
+});
+
+const pageSize = ref(table.getState().pagination.pageSize.toString());
+
+watch(pageSize, (newSize) => {
+  table.setPageSize(Number(newSize));
 });
 </script>
 
@@ -86,33 +119,59 @@ const table = useVueTable({
   <div class="flex h-full w-full flex-col space-y-4">
     <div class="flex items-center justify-between">
       <h1 class="font-header text-2xl font-bold">{{ data.length }} wyników</h1>
-      <Input
-        placeholder="Szukaj"
-        class="font-body h-8 w-xs border-neutral-300 shadow-md"
-      />
       <div class="flex items-center justify-center gap-2">
+        <Input
+          placeholder="Szukaj"
+          class="font-body h-8 w-2xs border-neutral-300 shadow-md"
+        />
+        <Select
+          v-model="pageSize"
+          :value="table.getState().pagination.pageSize.toString()"
+        >
+          <SelectTrigger class="font-body w-18 border-neutral-300 shadow-md">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent
+            class="font-body border-neutral-300 bg-white shadow-md"
+          >
+            <SelectGroup>
+              <SelectLabel class="text-gray-400"
+                >Elementów na stronie...</SelectLabel
+              >
+              <SelectItem
+                v-for="value in pageSizes"
+                :key="value"
+                :value="value"
+                >{{ value }}</SelectItem
+              >
+            </SelectGroup>
+          </SelectContent>
+        </Select>
         <Button
+          size="icon"
+          @click="() => table.previousPage()"
+          :disabled="!table.getCanPreviousPage()"
+          class="hover:text-secondary bg-secondary h-8 w-8 text-white"
+          ><ChevronLeft
+        /></Button>
+        <Button
+          size="icon"
+          @click="() => table.nextPage()"
+          :disabled="!table.getCanNextPage()"
+          class="hover:text-secondary bg-secondary h-8 w-8 text-white"
+          ><ChevronRight
+        /></Button>
+        <Button
+          size="icon"
           @click="rerender"
-          class="font-body bg-secondary hover:text-secondary h-8 w-auto font-bold text-white"
-          >Odśwież</Button
-        >
-        <Button
-          class="font-body bg-secondary hover:text-secondary h-8 w-auto font-bold text-white"
-          >Inny przycisk</Button
-        >
-        <Button
-          class="font-body bg-secondary hover:text-secondary h-8 w-auto font-bold text-white"
-          >Wolololo</Button
-        >
+          class="hover:text-secondary bg-secondary h-8 w-8 text-white"
+          ><RotateCcw
+        /></Button>
       </div>
     </div>
     <div class="h-full w-full">
-      <table
-        class="font-body min-w-full divide-y divide-gray-200 text-left text-sm text-gray-700"
-      >
-        <thead
-          class="bg-gray-100 text-xs font-semibold text-gray-600 uppercase"
-        >
+      <table class="font-body min-w-full text-left text-sm">
+        <thead class="text-xs font-bold uppercase">
           <tr
             v-for="headerGroup in table.getHeaderGroups()"
             :key="headerGroup.id"
@@ -121,7 +180,7 @@ const table = useVueTable({
               v-for="header in headerGroup.headers"
               :key="header.id"
               :colSpan="header.colSpan"
-              class="px-4 py-3 text-left"
+              class="px-4 py-6 text-left"
             >
               <FlexRender
                 v-if="!header.isPlaceholder"
@@ -131,11 +190,14 @@ const table = useVueTable({
             </th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-gray-100">
+        <tbody class="">
           <tr
-            v-for="row in table.getRowModel().rows"
+            v-for="(row, i) in table.getRowModel().rows"
+            class="group transition-colors hover:bg-neutral-200"
             :key="row.id"
-            class="transition-colors hover:bg-gray-50"
+            :class="{
+              'bg-neutral-100': i % 2 === 0,
+            }"
           >
             <td
               v-for="cell in row.getVisibleCells()"
