@@ -50,18 +50,24 @@ const columns = [
     cell: (info) =>
       h(CopiableText, {
         label: info.getValue(),
-        ariaLabel: "Row actions",
       }),
     header: () => "ID",
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor((row) => row.itemId, {
     id: "itemId",
-    cell: (info) => info.getValue(),
+    cell: (info) =>
+      h(CopiableText, {
+        label: info.getValue(),
+      }),
     header: () => "ID Przedmiotu",
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("name", {
+    cell: (info) =>
+      h(CopiableText, {
+        label: info.getValue(),
+      }),
     header: () => "Nazwa",
     footer: (props) => props.column.id,
   }),
@@ -85,20 +91,28 @@ const columns = [
     },
     footer: (props) => props.column.id,
   }),
-  // columnHelper.accessor("comment", {
-  //   header: "Komentarz",
-  //   footer: (props) => props.column.id,
-  // }),
   columnHelper.accessor("building", {
     header: "Budynek",
+    cell: (info) =>
+      h(CopiableText, {
+        label: info.getValue(),
+      }),
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("chamber", {
     header: "Komora",
+    cell: (info) =>
+      h(CopiableText, {
+        label: info.getValue(),
+      }),
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("shelf", {
     header: "Półka",
+    cell: (info) =>
+      h(CopiableText, {
+        label: info.getValue(),
+      }),
     footer: (props) => props.column.id,
   }),
   {
