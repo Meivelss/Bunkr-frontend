@@ -74,7 +74,7 @@ const columns = [
         "div",
         {
           class: [
-            "rounded-full text-xs uppercase border flex items-center justify-center w-full h-full px-2 py-1",
+            "rounded-full font-bold text-xs uppercase border flex items-center justify-center w-full h-full px-2 py-1",
             isRented
               ? "text-yellow-800 bg-yellow-300/50 border-yellow-500"
               : "text-green-800 bg-green-300/50 border-green-500",
@@ -119,8 +119,25 @@ const columns = [
   },
 ];
 
+function shuffle(array: any[]) {
+  let newArray = array.slice();
+  let currentIndex = newArray.length;
+
+  while (currentIndex != 0) {
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [newArray[currentIndex], newArray[randomIndex]] = [
+      newArray[randomIndex],
+      newArray[currentIndex],
+    ];
+  }
+
+  return newArray;
+}
+
 const rerender = () => {
-  data.value = defaultData;
+  data.value = shuffle(defaultData);
 };
 
 // function handleGoToPage(e: any) {

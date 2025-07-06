@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 const props = defineProps({
   label: {
     type: String,
@@ -13,10 +20,19 @@ const copyToClipboard = () => {
 </script>
 
 <template>
-  <Button
-    @click="copyToClipboard"
-    class="cursor-pointer bg-transparent shadow-none hover:bg-white/80 hover:shadow-sm"
-  >
-    {{ props.label }}
-  </Button>
+  <TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger>
+        <Button
+          @click="copyToClipboard"
+          class="cursor-pointer bg-transparent shadow-none hover:bg-white/50 hover:shadow-sm"
+        >
+          {{ props.label.slice(0, 8) + "..." }}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent class="">
+        <p>{{ label }}</p>
+      </TooltipContent>
+    </Tooltip>
+  </TooltipProvider>
 </template>
