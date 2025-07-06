@@ -18,9 +18,9 @@ import {
 import { ArrowUpDown } from "lucide-vue-next";
 import { h, ref } from "vue";
 import { valueUpdater } from "@/utils/valueUpdater";
+import paymentsData from "./payments.json";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/custom/Table/checkbox";
 import {
   Table,
   TableBody,
@@ -33,277 +33,16 @@ import {
 export interface Payment {
   id: string;
   amount: number;
-  status: "pending" | "processing" | "success" | "failed";
+  status: string;
   email: string;
 }
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-  {
-    id: "m5gr84i9",
-    amount: 316,
-    status: "success",
-    email: "ken99@yahoo.com",
-  },
-  {
-    id: "3u1reuv4",
-    amount: 242,
-    status: "success",
-    email: "Abe45@gmail.com",
-  },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-];
+const data = ref<Payment[]>(paymentsData);
 
 const columns: ColumnDef<Payment>[] = [
   {
-    id: "select",
-    header: ({ table }) =>
-      h(Checkbox, {
-        modelValue:
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate"),
-        "onUpdate:modelValue": (value) =>
-          table.toggleAllPageRowsSelected(!!value),
-        ariaLabel: "Select all",
-      }),
-    cell: ({ row }) =>
-      h(Checkbox, {
-        modelValue: row.getIsSelected(),
-        "onUpdate:modelValue": (value) => row.toggleSelected(!!value),
-        ariaLabel: "Select row",
-      }),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     accessorKey: "status",
-    header: "Status",
+    header: "STATUS",
     cell: ({ row }) =>
       h("div", { class: "capitalize" }, row.getValue("status")),
   },
@@ -314,16 +53,17 @@ const columns: ColumnDef<Payment>[] = [
         Button,
         {
           variant: "ghost",
+          class: "font-bold",
           onClick: () => column.toggleSorting(column.getIsSorted() === "asc"),
         },
-        () => ["Email", h(ArrowUpDown, { class: "ml-2 h-4 w-4" })],
+        () => ["EMAIL", h(ArrowUpDown, { class: "ml-2 h-4 w-4" })],
       );
     },
     cell: ({ row }) => h("div", { class: "lowercase" }, row.getValue("email")),
   },
   {
     accessorKey: "amount",
-    header: () => h("div", { class: "text-right" }, "Amount"),
+    header: () => h("div", { class: "text-right" }, "AMOUNT"),
     cell: ({ row }) => {
       const amount = Number.parseFloat(row.getValue("amount"));
 
@@ -382,7 +122,7 @@ const table = useVueTable({
 
 <template>
   <div>
-    <div class="rounded-md border-1 border-neutral-200 shadow-md">
+    <div class="">
       <Table>
         <TableHeader>
           <TableRow
@@ -398,15 +138,18 @@ const table = useVueTable({
             </TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody class="font-body">
           <template v-if="table.getRowModel().rows?.length">
-            <template v-for="row in table.getRowModel().rows" :key="row.id">
+            <template
+              v-for="(row, i) in table.getRowModel().rows"
+              :key="row.id"
+            >
               <TableRow :data-state="row.getIsSelected() && 'selected'">
                 <TableCell
                   v-for="cell in row.getVisibleCells()"
                   :key="cell.id"
                   :class="{
-                    'bg-primary/40': parseInt(cell.id) % 2 === 1,
+                    'bg-primary/30': i % 2 === 1,
                   }"
                 >
                   <FlexRender
