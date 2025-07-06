@@ -18,52 +18,82 @@ import {
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import DetailsButton from "./custom/Table/checkbox/DetailsButton.vue";
-import defaultData from "@/components/tableData.json";
+// import defaultData from "@/components/tableData.json";
+import defaultData from "public/randomized_items.json";
 import { watch, ref, h } from "vue";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-vue-next";
 
 // const INITIAL_PAGE_INDEX = 0;
 
-type User = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  visits: number;
-  progress: number;
-  status: string;
+type Thing = {
+  generalId: string;
+  itemId: string;
+  name: string;
+  building: string;
+  chamber: string;
+  shelf: string;
+  shelfLevel: string;
+  comment: string;
+  photo: string;
+  isRented: boolean;
+  rentedBy: string;
 };
 
-const columnHelper = createColumnHelper<User>();
+const columnHelper = createColumnHelper<Thing>();
 // const goToPageNumber = ref(INITIAL_PAGE_INDEX + 1);
 const pageSizes = [8, 10, 12, 16, 20];
 const data = ref(defaultData);
 
 const columns = [
-  columnHelper.accessor("firstName", {
+  columnHelper.accessor("generalId", {
+    cell: (info) => info.getValue().slice(0, 8) + "...",
+    header: () => "ID",
+    footer: (props) => props.column.id,
+  }),
+  columnHelper.accessor((row) => row.itemId, {
+    id: "itemId",
     cell: (info) => info.getValue(),
-    header: () => "First Name",
+    header: () => "ID Przedmiotu",
     footer: (props) => props.column.id,
   }),
-  columnHelper.accessor((row) => row.lastName, {
-    id: "lastName",
-    cell: (info) => info.getValue(),
-    header: () => "Last Name",
+  columnHelper.accessor("name", {
+    header: () => "Nazwa",
     footer: (props) => props.column.id,
   }),
-  columnHelper.accessor("age", {
-    header: () => "Age",
+  columnHelper.accessor("isRented", {
+    header: () => "Stan",
+    cell: (info) => {
+      const isRented = info.getValue();
+
+      return h(
+        "div",
+        {
+          class: [
+            "rounded-full text-xs uppercase border flex items-center justify-center w-full h-full px-2 py-1",
+            isRented
+              ? "text-yellow-800 bg-yellow-300/50 border-yellow-500"
+              : "text-green-800 bg-green-300/50 border-green-500",
+          ].join(" "),
+        },
+        isRented ? "Wypożyczony" : "Dostępny",
+      );
+    },
     footer: (props) => props.column.id,
   }),
-  columnHelper.accessor("visits", {
-    header: () => "Visits",
+  // columnHelper.accessor("comment", {
+  //   header: "Komentarz",
+  //   footer: (props) => props.column.id,
+  // }),
+  columnHelper.accessor("building", {
+    header: "Budynek",
     footer: (props) => props.column.id,
   }),
-  columnHelper.accessor("status", {
-    header: "Status",
+  columnHelper.accessor("chamber", {
+    header: "Komora",
     footer: (props) => props.column.id,
   }),
-  columnHelper.accessor("progress", {
-    header: "Profile Progress",
+  columnHelper.accessor("shelf", {
+    header: "Półka",
     footer: (props) => props.column.id,
   }),
   {
@@ -108,9 +138,10 @@ const table = useVueTable({
   getPaginationRowModel: getPaginationRowModel(),
 });
 
-const pageSize = ref(table.getState().pagination.pageSize.toString());
+const pageSize = ref(table.getState().pagination.pageSize);
 
 watch(pageSize, (newSize) => {
+  console.log("old size:", table.getState().pagination.pageSize);
   table.setPageSize(Number(newSize));
 });
 </script>
@@ -124,11 +155,7 @@ watch(pageSize, (newSize) => {
           placeholder="Szukaj"
           class="font-body h-8 w-2xs border-neutral-300 shadow-md"
         />
-        <Select
-          v-model="pageSize"
-          :value="table.getState().pagination.pageSize.toString()"
-        >
-          <!-- TODO: that should be the same height as Input -->
+        <Select v-model="pageSize">
           <SelectTrigger class="font-body w-18 border-neutral-300 shadow-md">
             <SelectValue />
           </SelectTrigger>
