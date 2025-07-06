@@ -19,9 +19,10 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import DetailsButton from "./custom/Table/checkbox/DetailsButton.vue";
 // import defaultData from "@/components/tableData.json";
-import defaultData from "public/randomized_items.json";
+import defaultData from "src/randomized_items.json";
 import { watch, ref, h } from "vue";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-vue-next";
+import CopiableText from "./custom/Table/checkbox/CopiableText.vue";
 
 // const INITIAL_PAGE_INDEX = 0;
 
@@ -46,7 +47,11 @@ const data = ref(defaultData);
 
 const columns = [
   columnHelper.accessor("generalId", {
-    cell: (info) => info.getValue().slice(0, 8) + "...",
+    cell: (info) =>
+      h(CopiableText, {
+        label: info.getValue(),
+        ariaLabel: "Row actions",
+      }),
     header: () => "ID",
     footer: (props) => props.column.id,
   }),
@@ -208,7 +213,7 @@ watch(pageSize, (newSize) => {
               v-for="header in headerGroup.headers"
               :key="header.id"
               :colSpan="header.colSpan"
-              class="px-4 py-6 text-left"
+              class="px-4 py-6 text-center"
             >
               <FlexRender
                 v-if="!header.isPlaceholder"
@@ -218,6 +223,7 @@ watch(pageSize, (newSize) => {
             </th>
           </tr>
         </thead>
+        <!-- TODO: Text to left/right for first/last cells -->
         <tbody class="">
           <tr
             v-for="(row, i) in table.getRowModel().rows"
@@ -230,7 +236,7 @@ watch(pageSize, (newSize) => {
             <td
               v-for="cell in row.getVisibleCells()"
               :key="cell.id"
-              class="px-4 py-2"
+              class="px-4 py-2 text-center"
             >
               <FlexRender
                 :render="cell.column.columnDef.cell"
