@@ -128,6 +128,7 @@ watch(pageSize, (newSize) => {
           v-model="pageSize"
           :value="table.getState().pagination.pageSize.toString()"
         >
+          <!-- TODO: that should be the same height as Input -->
           <SelectTrigger class="font-body w-18 border-neutral-300 shadow-md">
             <SelectValue />
           </SelectTrigger>
