@@ -70,6 +70,19 @@ const page = computed({
 
 /* tanstacc columns definition */
 const columns = [
+  {
+    /* row index */
+    id: "index",
+    enableHiding: false,
+    cell: (info: any) =>
+      h(
+        "span",
+        {
+          class: "text-xs text-neutral-400",
+        },
+        info.row.index + 1,
+      ),
+  },
   columnHelper.accessor("generalId", {
     cell: (info) =>
       h(CopiableText, {

@@ -26,6 +26,7 @@ describe("TableComponent tests", () => {
     expect(headerTexts).toEqual(
       // todo add filters
       expect.arrayContaining([
+        "", // row index column
         "ID",
         "ID Przedmiotu",
         "Nazwa",
