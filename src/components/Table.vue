@@ -9,6 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+defineOptions({ name: "TableComponent" });
 import {
   Select,
   SelectContent,
@@ -27,8 +28,7 @@ import {
 } from "@tanstack/vue-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// import defaultData from "@/components/tableData.json";
-import defaultData from "src/randomized_items.json";
+import defaultData from "@/randomized_items.json";
 import { watch, computed, ref, h } from "vue";
 import { RotateCcw } from "lucide-vue-next";
 import DetailsButton from "@/components/custom/Table/checkbox/DetailsButton.vue";
@@ -298,6 +298,9 @@ watch(pageSize, (newSize) => {
       </table>
     </div>
     <div class="flex items-center justify-center gap-2">
+      <p class="font-body p-8 text-sm whitespace-nowrap text-neutral-600">
+        {{ data.length }} wyniki
+      </p>
       <div class="h-20 w-full" />
       <Pagination
         v-model:page="page"
