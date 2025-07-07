@@ -29,7 +29,7 @@ const forwarded = useForwardProps(delegatedProps);
     :class="
       cn(
         buttonVariants({ variant: 'ghost', size }),
-        'gap-1 px-2.5 sm:pr-2.5',
+        'text-secondary gap-1 px-2.5 sm:pr-2.5',
         props.class,
       )
     "
