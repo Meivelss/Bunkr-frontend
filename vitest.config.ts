@@ -15,7 +15,7 @@ export default defineConfig({
     environment: "happy-dom",
     globals: true,
     coverage: {
-      enabled: true,
+      enabled: false,
       provider: "v8",
       reporter: ["text", "html"],
       reportsDirectory: "./coverage",
