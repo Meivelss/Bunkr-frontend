@@ -25,17 +25,16 @@ import {
   useVueTable,
   createColumnHelper,
 } from "@tanstack/vue-table";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import DetailsButton from "./custom/Table/checkbox/DetailsButton.vue";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 // import defaultData from "@/components/tableData.json";
 import defaultData from "src/randomized_items.json";
 import { watch, computed, ref, h } from "vue";
 import { RotateCcw } from "lucide-vue-next";
-import CopiableText from "./custom/Table/checkbox/CopiableText.vue";
+import DetailsButton from "@/components/custom/Table/checkbox/DetailsButton.vue";
+import CopiableText from "@/components/custom/Table/checkbox/CopiableText.vue";
 
-const INITIAL_PAGE_INDEX = 0;
-
+/* storage item type */
 type Item = {
   generalId: string;
   itemId: string;
@@ -50,21 +49,25 @@ type Item = {
   rentedBy: string;
 };
 
+/* necessary for tanstacc */
 const columnHelper = createColumnHelper<Item>();
-const goToPageNumber = ref(INITIAL_PAGE_INDEX + 1);
+
+/* available page sizes */
 const pageSizes = [10, 25, 50, 75, 100];
+
+/* data to render in table */
 const data = ref(defaultData);
 
+/* nie wiem jak to dziala ale llm takie dal i dziala, pozniej sie zastanowie o co chodzi */
 const page = computed({
-  // Getter: returns the table's current page index + 1
   get: () => table.getState().pagination.pageIndex + 1,
 
-  // Setter: sets the table's page index (value - 1)
   set: (value) => {
     table.setPageIndex(value - 1);
   },
 });
 
+/* tanstacc columns definition */
 const columns = [
   columnHelper.accessor("generalId", {
     cell: (info) =>
@@ -153,6 +156,12 @@ const columns = [
   },
 ];
 
+/**
+ * shuffles array, for development purposes mostly
+ * @param array - data to shuffle
+ * @returns shuffled array
+ * @deprecated
+ */
 function shuffle(array: any[]) {
   let newArray = array.slice();
   let currentIndex = newArray.length;
@@ -170,27 +179,16 @@ function shuffle(array: any[]) {
   return newArray;
 }
 
+/**
+ * we don't really need this one
+ */
 const rerender = () => {
   data.value = shuffle(defaultData);
 };
 
-function handleGoToPage(e: any) {
-  const page = e.target.value ? Number(e.target.value) - 1 : 0;
-  goToPageNumber.value = page + 1;
-  table.setPageIndex(page);
-}
-
-function goToPage(a: number) {
-  console.log("current page:", table.getState().pagination.pageIndex);
-  console.log("target page:", a);
-  table.setPageIndex(a);
-}
-
-// const handlePageSizeChange = (e: any) => {
-//   console.log("current page size: ", table.getState().pagination.pageSize);
-//   table.setPageSize(Number(e.target.value));
-// };
-
+/**
+ * tanstacc table
+ */
 const table = useVueTable({
   get data() {
     return data.value;
@@ -200,8 +198,14 @@ const table = useVueTable({
   getPaginationRowModel: getPaginationRowModel(),
 });
 
+/**
+ * amount of items to display on table page
+ */
 const pageSize = ref(table.getState().pagination.pageSize);
 
+/**
+ * monitor changes in table page size
+ */
 watch(pageSize, (newSize) => {
   console.log("old size:", table.getState().pagination.pageSize);
   table.setPageSize(Number(newSize));
@@ -237,20 +241,6 @@ watch(pageSize, (newSize) => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <!-- <Button
-          size="icon"
-          @click="() => table.previousPage()"
-          :disabled="!table.getCanPreviousPage()"
-          class="hover:text-secondary bg-secondary h-8 w-8 text-white"
-          ><ChevronLeft
-        /></Button>
-        <Button
-          size="icon"
-          @click="() => table.nextPage()"
-          :disabled="!table.getCanNextPage()"
-          class="hover:text-secondary bg-secondary h-8 w-8 text-white"
-          ><ChevronRight
-        /></Button> -->
         <Button
           size="icon"
           @click="rerender"
@@ -259,7 +249,7 @@ watch(pageSize, (newSize) => {
         /></Button>
       </div>
     </div>
-    <div class="h-full w-full">
+    <div class="min-h-0 w-full flex-1 overflow-y-auto">
       <table class="font-body min-w-full text-left text-sm">
         <thead class="text-xs font-bold uppercase">
           <tr
@@ -280,7 +270,6 @@ watch(pageSize, (newSize) => {
             </th>
           </tr>
         </thead>
-        <!-- TODO: Text to left/right for first/last cells -->
         <tbody class="">
           <tr
             v-for="(row, i) in table.getRowModel().rows"
@@ -304,9 +293,8 @@ watch(pageSize, (newSize) => {
         </tbody>
       </table>
     </div>
-
-    <!-- //   table.setPageIndex(page); -->
     <div class="flex items-center justify-center gap-2">
+      <div class="h-20 w-full" />
       <Pagination
         v-model:page="page"
         :items-per-page="pageSize"
@@ -316,7 +304,6 @@ watch(pageSize, (newSize) => {
         <PaginationContent v-slot="{ items }">
           <PaginationFirst />
           <PaginationPrevious />
-
           <template v-for="(item, index) in items" :key="index">
             <PaginationItem
               v-if="item.type === 'page'"
