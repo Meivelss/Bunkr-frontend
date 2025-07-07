@@ -26,7 +26,7 @@ import CopiableText from "./custom/Table/checkbox/CopiableText.vue";
 
 // const INITIAL_PAGE_INDEX = 0;
 
-type Thing = {
+type Item = {
   generalId: string;
   itemId: string;
   name: string;
@@ -40,9 +40,9 @@ type Thing = {
   rentedBy: string;
 };
 
-const columnHelper = createColumnHelper<Thing>();
+const columnHelper = createColumnHelper<Item>();
 // const goToPageNumber = ref(INITIAL_PAGE_INDEX + 1);
-const pageSizes = [8, 10, 12, 16, 20];
+const pageSizes = [10, 25, 50, 75, 100];
 const data = ref(defaultData);
 
 const columns = [
