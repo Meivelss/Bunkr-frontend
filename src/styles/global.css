@@ -7,6 +7,16 @@
   --color-secondary: #611e2e;
   --color-accent: #cfc4b7;
   --color-complementary: #efe9e1;
+
+  --color-border: #d4d4d4;
+
+  /* text */
+
+  /* for dropdown */
+  --color-popover: #ffffff;
+  --color-popover-foreground: #000000;
+
+  /* fonts */
   --font-header: "Roboto", sans-serif;
   --font-body: "Exo 2", sans-serif;
 }
