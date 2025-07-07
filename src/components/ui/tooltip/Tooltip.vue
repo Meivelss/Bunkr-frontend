@@ -6,18 +6,19 @@ import {
   useForwardPropsEmits,
 } from "reka-ui";
 
-const props = defineProps<TooltipRootProps>();
+interface MyTooltipWrapperProps extends TooltipRootProps {}
+
+const props = withDefaults(defineProps<MyTooltipWrapperProps>(), {
+  disableHoverableContent: true,
+  delayDuration: 1000,
+});
 const emits = defineEmits<TooltipRootEmits>();
 
 const forwarded = useForwardPropsEmits(props, emits);
 </script>
 
 <template>
-  <TooltipRoot
-    data-slot="tooltip"
-    disable-hoverable-content="true"
-    v-bind="forwarded"
-  >
+  <TooltipRoot data-slot="tooltip" v-bind="forwarded">
     <slot />
   </TooltipRoot>
 </template>
