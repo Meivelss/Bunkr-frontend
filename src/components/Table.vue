@@ -249,7 +249,19 @@ watch(pageSize, (newSize) => {
         /></Button>
       </div>
     </div>
-    <div class="min-h-0 w-full flex-1 overflow-y-auto">
+    <div
+      style="
+        mask-image: linear-gradient(
+          to bottom,
+          transparent,
+          black 20px,
+          black calc(100% - 20px),
+          transparent
+        );
+        mask-mode: alpha;
+      "
+      class="min-h-0 w-full flex-1 overflow-y-auto"
+    >
       <table class="font-body min-w-full text-left text-sm">
         <thead class="text-xs font-bold uppercase">
           <tr
