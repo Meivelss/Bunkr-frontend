@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Breadcrumb from "@/components/Breadcrumb.vue";
 import {
   Select,
   SelectContent,
@@ -185,7 +186,7 @@ watch(pageSize, (newSize) => {
 <template>
   <div class="flex h-full w-full flex-col space-y-4">
     <div class="flex items-center justify-between">
-      <h1 class="font-header text-2xl font-bold">{{ data.length }} wyników</h1>
+      <Breadcrumb />
       <div class="flex items-center justify-center gap-2">
         <Input
           placeholder="Szukaj"
