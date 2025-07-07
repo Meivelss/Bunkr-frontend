@@ -3,16 +3,26 @@
 @import "tw-animate-css";
 
 @theme {
+  /* branding */
   --color-primary: #ffc72c;
   --color-secondary: #611e2e;
   --color-accent: #cfc4b7;
   --color-complementary: #efe9e1;
 
-  --color-border: #d4d4d4;
+  /* for storage status bean */
+  --color-item-rented: oklch(90.5% 0.182 98.111);
+  --color-item-available: oklch(87.1% 0.15 154.449);
+  --color-item-rented-border: oklch(47.6% 0.114 61.907);
+  --color-item-available-border: oklch(44.8% 0.119 151.328);
+
+  /* for use in most borders & separators */
+  --color-primary-border: #d4d4d4;
 
   /* text */
+  --color-primary-text: oklch(70.8% 0 0);
+  --color-secondary-text: oklch(43.9% 0 0);
 
-  /* for dropdown */
+  /* dropdown menu */
   --color-popover: #ffffff;
   --color-popover-foreground: #000000;
 

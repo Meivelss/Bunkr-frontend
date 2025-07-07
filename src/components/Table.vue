@@ -78,7 +78,7 @@ const columns = [
       h(
         "span",
         {
-          class: "text-xs text-neutral-400",
+          class: "text-xs text-primary-text",
         },
         info.row.index + 1,
       ),
@@ -224,17 +224,17 @@ watch(pageSize, (newSize) => {
       <div class="flex items-center justify-center gap-2">
         <Input
           placeholder="Szukaj"
-          class="font-body h-8 w-2xs border-neutral-300 shadow-md"
+          class="font-body border-primary-border h-8 w-2xs shadow-md"
         />
         <Select v-model="pageSize">
-          <SelectTrigger class="font-body w-18 border-neutral-300 shadow-md">
+          <SelectTrigger class="font-body border-primary-border w-18 shadow-md">
             <SelectValue />
           </SelectTrigger>
           <SelectContent
-            class="font-body border-neutral-300 bg-white shadow-md"
+            class="font-body border-primary-border bg-white shadow-md"
           >
             <SelectGroup>
-              <SelectLabel class="text-gray-400"
+              <SelectLabel class="text-primary-text"
                 >Elementów na stronie...</SelectLabel
               >
               <SelectItem
@@ -267,7 +267,7 @@ watch(pageSize, (newSize) => {
       "
       class="min-h-0 w-full flex-1 overflow-y-auto"
     >
-      <table class="font-body min-w-full text-left text-sm text-neutral-600">
+      <table class="font-body text-secondary-text min-w-full text-left text-sm">
         <thead class="text-xs font-bold uppercase">
           <tr
             v-for="headerGroup in table.getHeaderGroups()"
@@ -311,7 +311,7 @@ watch(pageSize, (newSize) => {
       </table>
     </div>
     <div class="flex items-center justify-center gap-2">
-      <p class="font-body p-8 text-sm whitespace-nowrap text-neutral-600">
+      <p class="font-body text-secondary-text p-8 text-sm whitespace-nowrap">
         {{ data.length }} wyniki
       </p>
       <div class="h-20 w-full" />
