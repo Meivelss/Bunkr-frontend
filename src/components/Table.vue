@@ -72,7 +72,7 @@ const columns = [
   columnHelper.accessor("generalId", {
     cell: (info) =>
       h(CopiableText, {
-        label: info.getValue(),
+        label: info.getValue().slice(0, 5),
       }),
     header: () => "ID",
     footer: (props) => props.column.id,
