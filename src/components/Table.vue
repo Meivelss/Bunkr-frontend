@@ -32,6 +32,7 @@ import defaultData from "src/randomized_items.json";
 import { watch, computed, ref, h } from "vue";
 import { RotateCcw } from "lucide-vue-next";
 import DetailsButton from "@/components/custom/Table/checkbox/DetailsButton.vue";
+import RentageStatus from "@/components/custom/Table/checkbox/RentageStatus.vue";
 import CopiableText from "@/components/custom/Table/checkbox/CopiableText.vue";
 
 /* storage item type */
@@ -99,18 +100,9 @@ const columns = [
     cell: (info) => {
       const isRented = info.getValue();
 
-      return h(
-        "div",
-        {
-          class: [
-            "rounded-full font-bold text-xs uppercase border flex items-center justify-center w-full h-full px-2 py-1",
-            isRented
-              ? "text-yellow-800 bg-yellow-300/50 border-yellow-500"
-              : "text-green-800 bg-green-300/50 border-green-500",
-          ].join(" "),
-        },
-        isRented ? "Wypożyczony" : "Dostępny",
-      );
+      return h(RentageStatus, {
+        variant: isRented ? "rented" : "available",
+      });
     },
     footer: (props) => props.column.id,
   }),
