@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 <template>
   <Button
-    class="hover:bg-primary/80 w-8 cursor-pointer bg-transparent shadow-none hover:shadow-sm"
+    class="w-8 cursor-pointer bg-transparent shadow-none hover:bg-white/80 hover:shadow-sm"
   >
     <EllipsisVertical />
   </Button>

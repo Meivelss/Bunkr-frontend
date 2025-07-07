@@ -33,7 +33,7 @@ const delegatedProps = reactiveOmit(props, "class", "size", "isActive");
         }),
         isActive ? 'bg-secondary text-white shadow-sm transition-all' : '',
         props.class,
-        'hover:text-secondary transition-colors duration-300 ease-in-out',
+        'hover:text-secondary cursor-pointer transition-colors duration-300 ease-in-out',
       )
     "
   >
