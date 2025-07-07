@@ -1,10 +1,15 @@
 import { mount } from "@vue/test-utils";
 import TableComponent from "@/components/Table.vue";
 
-test("TableComponent mounts properly", () => {
+describe("TableComponent mounts properly", () => {
   const wrapper = mount(TableComponent);
-
-  expect(wrapper.find("table").exists()).toBe(true);
-  expect(wrapper.findAll("tbody tr").length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain("wyników");
+  it("Should mount the table conponent", () => {
+    expect(wrapper.find("table").exists()).toBe(true);
+  });
+  it("Should render at least one column", () => {
+    expect(wrapper.findAll("tbody tr").length).toBeGreaterThan(0);
+  });
+  it("Should render the number of found records", () => {
+    expect(wrapper.text()).toMatch(/\d wyników/);
+  });
 });
