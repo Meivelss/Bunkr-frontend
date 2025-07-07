@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import {
+  Pagination,
+  PaginationContent,
+  PaginationFirst,
+  PaginationLast,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -25,7 +35,7 @@ import { watch, ref, h } from "vue";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-vue-next";
 import CopiableText from "./custom/Table/checkbox/CopiableText.vue";
 
-// const INITIAL_PAGE_INDEX = 0;
+const INITIAL_PAGE_INDEX = 0;
 
 type Item = {
   generalId: string;
@@ -42,7 +52,7 @@ type Item = {
 };
 
 const columnHelper = createColumnHelper<Item>();
-// const goToPageNumber = ref(INITIAL_PAGE_INDEX + 1);
+const goToPageNumber = ref(INITIAL_PAGE_INDEX + 1);
 const pageSizes = [10, 25, 50, 75, 100];
 const data = ref(defaultData);
 
@@ -155,11 +165,17 @@ const rerender = () => {
   data.value = shuffle(defaultData);
 };
 
-// function handleGoToPage(e: any) {
-//   const page = e.target.value ? Number(e.target.value) - 1 : 0;
-//   goToPageNumber.value = page + 1;
-//   table.setPageIndex(page);
-// }
+function handleGoToPage(e: any) {
+  const page = e.target.value ? Number(e.target.value) - 1 : 0;
+  goToPageNumber.value = page + 1;
+  table.setPageIndex(page);
+}
+
+function goToPage(a: number) {
+  console.log("current page:", table.getState().pagination.pageIndex);
+  console.log("target page:", a);
+  table.setPageIndex(a);
+}
 
 // const handlePageSizeChange = (e: any) => {
 //   console.log("current page size: ", table.getState().pagination.pageSize);
@@ -212,7 +228,7 @@ watch(pageSize, (newSize) => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Button
+        <!-- <Button
           size="icon"
           @click="() => table.previousPage()"
           :disabled="!table.getCanPreviousPage()"
@@ -225,7 +241,7 @@ watch(pageSize, (newSize) => {
           :disabled="!table.getCanNextPage()"
           class="hover:text-secondary bg-secondary h-8 w-8 text-white"
           ><ChevronRight
-        /></Button>
+        /></Button> -->
         <Button
           size="icon"
           @click="rerender"
@@ -278,6 +294,42 @@ watch(pageSize, (newSize) => {
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <!-- //   table.setPageIndex(page); -->
+    <div class="flex items-center justify-center gap-2">
+      <Pagination
+        v-slot="{ page }"
+        :items-per-page="pageSize"
+        :total="data.length"
+        :default-page="1"
+      >
+        <PaginationContent v-slot="{ items }">
+          <PaginationFirst @click="table.setPageIndex(0)" />
+          <PaginationPrevious @click="table.previousPage()" />
+
+          <template v-for="(item, index) in items" :key="index">
+            <PaginationItem
+              v-if="item.type === 'page'"
+              :value="item.value"
+              :is-active="item.value === page"
+              @click="goToPage(item.value - 1)"
+            >
+              {{ item.value }}
+            </PaginationItem>
+          </template>
+          <PaginationNext @click="table.nextPage()" />
+          <PaginationLast
+            @click="table.setPageIndex(table.getPageCount() - 1)"
+          />
+        </PaginationContent>
+      </Pagination>
+      <Button
+        size="icon"
+        @click="rerender"
+        class="hover:text-secondary bg-secondary h-8 w-8 text-white"
+        ><RotateCcw
+      /></Button>
     </div>
   </div>
 </template>
