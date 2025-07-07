@@ -8,16 +8,38 @@ import TableComponent from "@/components/Table.vue";
 describe("TableComponent tests", () => {
   it("should mount the table component", () => {
     const { container } = render(TableComponent);
+
     expect(container.querySelector("table")).toBeInTheDocument();
   });
 
   it("should render at least one column", () => {
     render(TableComponent);
+
     expect(screen.getAllByRole("row").length).toBeGreaterThan(0);
   });
+  it("should render all expected columns", async () => {
+    render(TableComponent);
 
+    const headers = await screen.findAllByRole("columnheader");
+    const headerTexts = headers.map((header) => header.textContent?.trim());
+
+    expect(headerTexts).toEqual(
+      // todo add filters
+      expect.arrayContaining([
+        "ID",
+        "ID Przedmiotu",
+        "Nazwa",
+        "Stan",
+        "Budynek",
+        "Komora",
+        "Półka",
+        "", // action column
+      ]),
+    );
+  });
   it("should render the number of found records", () => {
     render(TableComponent);
+
     expect(screen.getByText(/\d wyników/)).toBeInTheDocument();
   });
 
