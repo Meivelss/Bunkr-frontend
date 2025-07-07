@@ -5,7 +5,6 @@ import {
   PaginationContent,
   PaginationFirst,
   PaginationLast,
-  PaginationEllipsis,
   PaginationItem,
   PaginationNext,
   PaginationPrevious,
@@ -31,8 +30,8 @@ import { Input } from "./ui/input";
 import DetailsButton from "./custom/Table/checkbox/DetailsButton.vue";
 // import defaultData from "@/components/tableData.json";
 import defaultData from "src/randomized_items.json";
-import { watch, ref, h } from "vue";
-import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-vue-next";
+import { watch, computed, ref, h } from "vue";
+import { RotateCcw } from "lucide-vue-next";
 import CopiableText from "./custom/Table/checkbox/CopiableText.vue";
 
 const INITIAL_PAGE_INDEX = 0;
@@ -55,6 +54,16 @@ const columnHelper = createColumnHelper<Item>();
 const goToPageNumber = ref(INITIAL_PAGE_INDEX + 1);
 const pageSizes = [10, 25, 50, 75, 100];
 const data = ref(defaultData);
+
+const page = computed({
+  // Getter: returns the table's current page index + 1
+  get: () => table.getState().pagination.pageIndex + 1,
+
+  // Setter: sets the table's page index (value - 1)
+  set: (value) => {
+    table.setPageIndex(value - 1);
+  },
+});
 
 const columns = [
   columnHelper.accessor("generalId", {
@@ -299,29 +308,26 @@ watch(pageSize, (newSize) => {
     <!-- //   table.setPageIndex(page); -->
     <div class="flex items-center justify-center gap-2">
       <Pagination
-        v-slot="{ page }"
+        v-model:page="page"
         :items-per-page="pageSize"
         :total="data.length"
-        :default-page="1"
+        v-slot="{ page: componentPage }"
       >
         <PaginationContent v-slot="{ items }">
-          <PaginationFirst @click="table.setPageIndex(0)" />
-          <PaginationPrevious @click="table.previousPage()" />
+          <PaginationFirst />
+          <PaginationPrevious />
 
           <template v-for="(item, index) in items" :key="index">
             <PaginationItem
               v-if="item.type === 'page'"
               :value="item.value"
-              :is-active="item.value === page"
-              @click="goToPage(item.value - 1)"
+              :is-active="item.value === componentPage"
             >
               {{ item.value }}
             </PaginationItem>
           </template>
-          <PaginationNext @click="table.nextPage()" />
-          <PaginationLast
-            @click="table.setPageIndex(table.getPageCount() - 1)"
-          />
+          <PaginationNext />
+          <PaginationLast />
         </PaginationContent>
       </Pagination>
       <Button
