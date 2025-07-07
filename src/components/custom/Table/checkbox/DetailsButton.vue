@@ -30,7 +30,7 @@ const props = defineProps({
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent class="w-48">
-      <DropdownMenuLabel>Row</DropdownMenuLabel>
+      <DropdownMenuLabel>Row {{ props.rowIndex }}</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
         <DropdownMenuItem>

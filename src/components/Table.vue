@@ -146,7 +146,7 @@ const columns = [
   {
     id: "actions",
     enableHiding: false,
-    cell: () =>
+    cell: (info: any) =>
       h(
         "div",
         {
@@ -154,7 +154,7 @@ const columns = [
             "flex justify-end group-hover:opacity-100 opacity-0 transition-opacity duration-300",
         },
         h(DetailsButton, {
-          class: "",
+          rowIndex: info.row.index + 1,
           ariaLabel: "Row actions",
         }),
       ),
