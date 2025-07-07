@@ -13,7 +13,7 @@ const isRented = computed(() => props.variant === "rented");
 </script>
 
 <template>
-  <div
+  <!-- <div
     :class="[
       'flex h-full w-full items-center justify-center rounded-full border px-2 py-1 text-xs font-bold uppercase',
       isRented
@@ -22,8 +22,8 @@ const isRented = computed(() => props.variant === "rented");
     ]"
   >
     {{ isRented ? "Wypożyczony" : "Dostępny" }}
-  </div>
-  <!-- <div
+  </div> -->
+  <div
     class="flex flex-row items-center justify-center gap-2 uppercase select-none"
   >
     <span>
@@ -38,5 +38,5 @@ const isRented = computed(() => props.variant === "rented");
           : 'border-green-500 bg-green-300/80',
       ]"
     ></div>
-  </div> -->
+  </div>
 </template>
