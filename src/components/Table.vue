@@ -1,4 +1,5 @@
 <script setup lang="ts">
+defineOptions({ name: "TableComponent" })
 import {
   Select,
   SelectContent,
@@ -19,7 +20,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import DetailsButton from "./custom/Table/checkbox/DetailsButton.vue";
 // import defaultData from "@/components/tableData.json";
-import defaultData from "src/randomized_items.json";
+import defaultData from "@/randomized_items.json";
 import { watch, ref, h } from "vue";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-vue-next";
 import CopiableText from "./custom/Table/checkbox/CopiableText.vue";

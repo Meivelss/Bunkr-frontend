@@ -1,10 +1,24 @@
 /// <reference types="vitest" />
-import { getViteConfig } from "astro/config";
+import { defineConfig } from "vitest/config";
+import vue from "@vitejs/plugin-vue";
+import path from "path";
 
-export default getViteConfig({
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
   test: {
+    include: ["**/*.test.ts"],
     environment: "happy-dom",
     globals: true,
-    /* Vitest configuration options */
+    coverage: {
+      enabled: true,
+      provider: "v8",
+      reporter: ["text", "html"],
+      reportsDirectory: "./coverage",
+    },
   },
 });
