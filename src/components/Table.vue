@@ -184,10 +184,10 @@ watch(pageSize, (newSize) => {
 </script>
 
 <template>
-  <div class="flex h-full w-full flex-col space-y-4">
-    <div class="flex items-center justify-between">
+  <div class="flex w-full flex-col space-y-4 shadow-sm">
+    <div class="flex flex-col xl:flex-row gap-y-4 items-center justify-between p-4 border-b-[1px] border-gray-100">
       <Breadcrumb />
-      <div class="flex items-center justify-center gap-2">
+      <div class="flex flex-col lg:flex-row items-center justify-center gap-y-4 gap-2">
         <Input
           placeholder="Szukaj"
           class="font-body h-8 w-2xs border-neutral-300 shadow-md"
@@ -212,31 +212,36 @@ watch(pageSize, (newSize) => {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <Button
-          size="icon"
-          @click="() => table.previousPage()"
-          :disabled="!table.getCanPreviousPage()"
-          class="hover:text-secondary bg-secondary h-8 w-8 text-white"
-          ><ChevronLeft
-        /></Button>
-        <Button
-          size="icon"
-          @click="() => table.nextPage()"
-          :disabled="!table.getCanNextPage()"
-          class="hover:text-secondary bg-secondary h-8 w-8 text-white"
-          ><ChevronRight
-        /></Button>
-        <Button
-          size="icon"
-          @click="rerender"
-          class="hover:text-secondary bg-secondary h-8 w-8 text-white"
-          ><RotateCcw
-        /></Button>
+        <div class="flex gap-2">
+          <Button
+            size="icon"
+              @click="() => table.previousPage()"
+            :disabled="!table.getCanPreviousPage()"
+            class="hover:text-secondary bg-secondary h-8 w-8 text-white"
+            ><ChevronLeft
+          /></Button>
+          <Button
+            size="icon"
+            @click="() => table.nextPage()"
+            :disabled="!table.getCanNextPage()"
+            class="hover:text-secondary bg-secondary h-8 w-8 text-white"
+            ><ChevronRight
+          /></Button>
+          <Button
+            size="icon"
+            @click="rerender"
+            class="hover:text-secondary bg-secondary h-8 w-8 text-white"
+            ><RotateCcw
+          /></Button>
+        </div>
       </div>
     </div>
-    <div class="h-full w-full">
-      <table class="font-body min-w-full text-left text-sm">
-        <thead class="text-xs font-bold uppercase">
+    <div class="flex justify-end px-4">
+      Filtry: 
+    </div>
+    <div class="h-full w-full px-4">
+      <table class="font-body min-w-full text-left text-sm rounded-t-xl overflow-hidden">
+        <thead class="text-xs font-bold uppercase bg-secondary/50">
           <tr
             v-for="headerGroup in table.getHeaderGroups()"
             :key="headerGroup.id"
