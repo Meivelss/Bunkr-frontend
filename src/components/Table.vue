@@ -262,7 +262,7 @@ watch(pageSize, (newSize) => {
       "
       class="min-h-0 w-full flex-1 overflow-y-auto"
     >
-      <table class="font-body min-w-full text-left text-sm">
+      <table class="font-body min-w-full text-left text-sm text-neutral-600">
         <thead class="text-xs font-bold uppercase">
           <tr
             v-for="headerGroup in table.getHeaderGroups()"
