@@ -23,4 +23,20 @@ const isRented = computed(() => props.variant === "rented");
   >
     {{ isRented ? "Wypożyczony" : "Dostępny" }}
   </div>
+  <!-- <div
+    class="flex flex-row items-center justify-center gap-2 uppercase select-none"
+  >
+    <span>
+      {{ isRented ? "Wypożyczony" : "Dostępny" }}
+    </span>
+    <div
+      class=""
+      :class="[
+        'h-2 w-2 rounded-full border-1',
+        isRented
+          ? 'border-yellow-500 bg-yellow-300/80'
+          : 'border-green-500 bg-green-300/80',
+      ]"
+    ></div>
+  </div> -->
 </template>
