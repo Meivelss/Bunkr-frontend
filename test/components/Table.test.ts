@@ -1,15 +1,35 @@
-import { mount } from "@vue/test-utils";
+import { render, screen } from "@testing-library/vue";
+import userEvent from "@testing-library/user-event";
+import { describe, it, expect } from "vitest";
+import "@testing-library/jest-dom";
+
 import TableComponent from "@/components/Table.vue";
 
 describe("TableComponent tests", () => {
-  const wrapper = mount(TableComponent);
-  it("should mount the table conponent", () => {
-    expect(wrapper.find("table").exists()).toBe(true);
+  it("should mount the table component", () => {
+    const { container } = render(TableComponent);
+    expect(container.querySelector("table")).toBeInTheDocument();
   });
+
   it("should render at least one column", () => {
-    expect(wrapper.findAll("tbody tr").length).toBeGreaterThan(0);
+    render(TableComponent);
+    expect(screen.getAllByRole("row").length).toBeGreaterThan(0);
   });
+
   it("should render the number of found records", () => {
-    expect(wrapper.text()).toMatch(/\d wyników/);
+    render(TableComponent);
+    expect(screen.getByText(/\d wyników/)).toBeInTheDocument();
+  });
+
+  it("should disable Previous on first page and enables after Next", async () => {
+    render(TableComponent);
+
+    const prev = await screen.findByLabelText("Previous page");
+    const next = await screen.findByLabelText("Next page");
+
+    expect(prev).toBeDisabled();
+
+    await userEvent.click(next);
+    expect(prev).not.toBeDisabled();
   });
 });

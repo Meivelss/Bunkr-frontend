@@ -217,6 +217,7 @@ watch(pageSize, (newSize) => {
           @click="() => table.previousPage()"
           :disabled="!table.getCanPreviousPage()"
           class="hover:text-secondary bg-secondary h-8 w-8 text-white"
+          aria-label="Previous page"
           ><ChevronLeft
         /></Button>
         <Button
@@ -224,6 +225,7 @@ watch(pageSize, (newSize) => {
           @click="() => table.nextPage()"
           :disabled="!table.getCanNextPage()"
           class="hover:text-secondary bg-secondary h-8 w-8 text-white"
+          aria-label="Next page"
           ><ChevronRight
         /></Button>
         <Button
