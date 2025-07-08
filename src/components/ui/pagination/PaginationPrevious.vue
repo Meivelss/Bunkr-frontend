@@ -26,6 +26,7 @@ const forwarded = useForwardProps(delegatedProps);
 <template>
   <PaginationPrev
     data-slot="pagination-previous"
+    aria-label="Poprzednia strona"
     :class="
       cn(
         buttonVariants({ variant: 'ghost', size }),

@@ -44,15 +44,32 @@ describe("TableComponent tests", () => {
     expect(screen.getByText(/\d wyniki/)).toBeInTheDocument();
   });
 
-  // it("should disable Previous on first page and enables after Next", async () => {
-  //   render(TableComponent);
+  it("should have working pagination buttons", async () => {
+    render(TableComponent);
 
-  //   const prev = await screen.findByLabelText("Poprzednia strona");
-  //   const next = await screen.findByLabelText("Następna strona");
+    const first = await screen.findByLabelText("Początek listy");
+    const prev = await screen.findByLabelText("Poprzednia strona");
+    const next = await screen.findByLabelText("Następna strona");
+    const last = await screen.findByLabelText("Koniec");
 
-  //   expect(prev).toBeDisabled();
+    // defaulut state, we are at the first page
+    expect(first).toBeDisabled();
+    expect(prev).toBeDisabled();
+    expect(next).not.toBeDisabled();
+    expect(last).not.toBeDisabled();
 
-  //   await userEvent.click(next);
-  //   expect(prev).not.toBeDisabled();
-  // });
+    // we open the second page
+    await userEvent.click(next);
+    expect(first).not.toBeDisabled();
+    expect(prev).not.toBeDisabled();
+    expect(next).not.toBeDisabled();
+    expect(last).not.toBeDisabled();
+
+    // we are at the last page
+    await userEvent.click(last);
+    expect(first).not.toBeDisabled();
+    expect(prev).not.toBeDisabled();
+    expect(next).toBeDisabled();
+    expect(last).toBeDisabled();
+  });
 });

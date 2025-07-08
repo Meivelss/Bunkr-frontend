@@ -26,6 +26,7 @@ const forwarded = useForwardProps(delegatedProps);
 <template>
   <PaginationLast
     data-slot="pagination-last"
+    aria-label="Koniec"
     :class="
       cn(
         buttonVariants({ variant: 'ghost', size }),

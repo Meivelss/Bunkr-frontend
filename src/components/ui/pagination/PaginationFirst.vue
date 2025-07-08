@@ -26,6 +26,7 @@ const forwarded = useForwardProps(delegatedProps);
 <template>
   <PaginationFirst
     data-slot="pagination-first"
+    aria-label="Początek listy"
     :class="
       cn(
         buttonVariants({ variant: 'ghost', size }),
