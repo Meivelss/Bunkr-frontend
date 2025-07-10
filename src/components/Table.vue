@@ -27,10 +27,12 @@ import {
   createColumnHelper,
   getFilteredRowModel,
 } from "@tanstack/vue-table";
-import type { FilterFn } from "@tanstack/vue-table";
+// ✨ Import the type for column filter state
+import type { FilterFn, ColumnFiltersState } from "@tanstack/vue-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import ColumnInput from "@/components/custom/Table/checkbox/ColumnInput.vue";
 import defaultData from "@/randomized_items.json";
 import { watch, computed, ref, h } from "vue";
 import { RotateCcw } from "lucide-vue-next";
@@ -53,10 +55,12 @@ type Item = {
   rentedBy: string;
 };
 
-/* necessary for tanstacc */
+/* necessary for tanstack */
 const columnHelper = createColumnHelper<Item>();
 
 const filterQuery = ref("");
+// ✨ State for the per-column filters
+const columnFilters = ref<ColumnFiltersState>([]);
 
 /* available page sizes */
 const pageSizes = [10, 25, 50, 75, 100];
@@ -64,7 +68,6 @@ const pageSizes = [10, 25, 50, 75, 100];
 /* data to render in table */
 const data = ref(defaultData);
 
-/* nie wiem jak to dziala ale llm takie dal i dziala, pozniej sie zastanowie o co chodzi */
 const page = computed({
   get: () => table.getState().pagination.pageIndex + 1,
 
@@ -73,7 +76,7 @@ const page = computed({
   },
 });
 
-/* tanstacc columns definition */
+/* tanstack columns definition */
 const columns = [
   {
     /* row index */
@@ -102,7 +105,7 @@ const columns = [
       h(CopiableText, {
         label: info.getValue(),
       }),
-    header: () => "ID Przedmiotu",
+    header: () => "ID Obiektu",
     footer: (props) => props.column.id,
   }),
   columnHelper.accessor("name", {
@@ -210,7 +213,7 @@ const fuzzyFilter: FilterFn<Item> = (row, columnId, value, addMeta) => {
 };
 
 /**
- * tanstacc table
+ * tanstack table
  */
 const table = useVueTable({
   get data() {
@@ -221,9 +224,20 @@ const table = useVueTable({
   getPaginationRowModel: getPaginationRowModel(),
   getFilteredRowModel: getFilteredRowModel(),
   globalFilterFn: fuzzyFilter,
+  // ✨ Enable column filtering
+  enableColumnFilters: true,
+  // ✨ Add handler to update state when column filters change
+  onColumnFiltersChange: (updater) => {
+    columnFilters.value =
+      typeof updater === "function" ? updater(columnFilters.value) : updater;
+  },
   state: {
     get globalFilter() {
       return filterQuery.value;
+    },
+    // ✨ Add columnFilters to the table state
+    get columnFilters() {
+      return columnFilters.value;
     },
   },
 });
@@ -237,7 +251,6 @@ const pageSize = ref(table.getState().pagination.pageSize);
  * monitor changes in table page size
  */
 watch(pageSize, (newSize) => {
-  console.log("old size:", table.getState().pagination.pageSize);
   table.setPageSize(Number(newSize));
 });
 </script>
@@ -249,7 +262,7 @@ watch(pageSize, (newSize) => {
       <div class="flex items-center justify-center gap-2">
         <Input
           v-model="filterQuery"
-          placeholder="Szukaj"
+          placeholder="Szukaj globalnie..."
           class="font-body border-primary-border h-8 w-2xs shadow-md"
         />
         <Select v-model="pageSize">
@@ -266,7 +279,7 @@ watch(pageSize, (newSize) => {
               <SelectItem
                 v-for="value in pageSizes"
                 :key="value"
-                :value="value"
+                :value="String(value)"
                 >{{ value }}</SelectItem
               >
             </SelectGroup>
@@ -303,13 +316,26 @@ watch(pageSize, (newSize) => {
               v-for="header in headerGroup.headers"
               :key="header.id"
               :colSpan="header.colSpan"
-              class="px-4 py-6 text-center"
+              class="px-4 py-3 text-center"
             >
-              <FlexRender
-                v-if="!header.isPlaceholder"
-                :render="header.column.columnDef.header"
-                :props="header.getContext()"
-              />
+              <div v-if="!header.isPlaceholder">
+                <!-- <FlexRender
+                  :render="header.column.columnDef.header"
+                  :props="header.getContext()"
+                /> -->
+                <div v-if="header.column.getCanFilter()" class="mt-2">
+                  <ColumnInput
+                    :value="(header.column.getFilterValue() as string) ?? ''"
+                    @input="header.column.setFilterValue($event.target.value)"
+                    :placeholder="
+                      typeof header.column.columnDef.header === 'function'
+                        ? header.column.columnDef.header()
+                        : (header.column.columnDef.header as string)
+                    "
+                    class="h-7 text-center text-xs"
+                  />
+                </div>
+              </div>
             </th>
           </tr>
         </thead>
@@ -338,7 +364,7 @@ watch(pageSize, (newSize) => {
     </div>
     <div class="flex items-center justify-center gap-2">
       <p class="font-body text-secondary-text p-8 text-sm whitespace-nowrap">
-        {{ data.length }} wyniki
+        {{ table.getFilteredRowModel().rows.length }} wyniki
       </p>
       <div class="h-20 w-full" />
       <Pagination
