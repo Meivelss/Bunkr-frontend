@@ -30,7 +30,6 @@ const isRented = computed(() => props.variant === "rented");
       {{ isRented ? "Wypożyczony" : "Dostępny" }}
     </span>
     <div
-      class=""
       :class="[
         'h-2 w-2 rounded-full border-1',
         isRented
