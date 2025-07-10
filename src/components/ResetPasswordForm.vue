@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Input } from "@/components/ui/input";
-import { ChevronLeft } from "lucide-vue-next";
 import { ShieldCheck } from "lucide-vue-next";
 import { CircleX } from "lucide-vue-next";
 import AuthPane from "@/components/custom/AuthPane.vue";

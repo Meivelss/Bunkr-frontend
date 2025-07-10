@@ -25,7 +25,10 @@ import {
   getPaginationRowModel,
   useVueTable,
   createColumnHelper,
+  getFilteredRowModel,
 } from "@tanstack/vue-table";
+import type { FilterFn } from "@tanstack/vue-table";
+import { rankItem } from "@tanstack/match-sorter-utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import defaultData from "@/randomized_items.json";
@@ -52,6 +55,8 @@ type Item = {
 
 /* necessary for tanstacc */
 const columnHelper = createColumnHelper<Item>();
+
+const filterQuery = ref("");
 
 /* available page sizes */
 const pageSizes = [10, 25, 50, 75, 100];
@@ -192,6 +197,19 @@ const rerender = () => {
 };
 
 /**
+ * table filtering function
+ */
+const fuzzyFilter: FilterFn<Item> = (row, columnId, value, addMeta) => {
+  const itemRank = rankItem(row.getValue(columnId), value);
+
+  addMeta({
+    itemRank,
+  });
+
+  return itemRank.passed;
+};
+
+/**
  * tanstacc table
  */
 const table = useVueTable({
@@ -201,6 +219,13 @@ const table = useVueTable({
   columns,
   getCoreRowModel: getCoreRowModel(),
   getPaginationRowModel: getPaginationRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
+  globalFilterFn: fuzzyFilter,
+  state: {
+    get globalFilter() {
+      return filterQuery.value;
+    },
+  },
 });
 
 /**
@@ -223,6 +248,7 @@ watch(pageSize, (newSize) => {
       <Breadcrumb />
       <div class="flex items-center justify-center gap-2">
         <Input
+          v-model="filterQuery"
           placeholder="Szukaj"
           class="font-body border-primary-border h-8 w-2xs shadow-md"
         />
@@ -318,7 +344,7 @@ watch(pageSize, (newSize) => {
       <Pagination
         v-model:page="page"
         :items-per-page="pageSize"
-        :total="data.length"
+        :total="table.getFilteredRowModel().rows.length"
         v-slot="{ page: componentPage }"
       >
         <PaginationContent v-slot="{ items }">
