@@ -290,7 +290,7 @@ watch(pageSize, (newSize) => {
         <tbody class="">
           <tr
             v-for="(row, i) in table.getRowModel().rows"
-            class="group transition-colors hover:bg-neutral-200"
+            class="group hover:bg-primary-hover transition-colors"
             :key="row.id"
             :class="{
               'bg-neutral-100': i % 2 === 0,

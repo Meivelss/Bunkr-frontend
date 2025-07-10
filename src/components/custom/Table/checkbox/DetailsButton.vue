@@ -30,27 +30,29 @@ const props = defineProps({
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent class="w-48">
-      <DropdownMenuLabel>Row {{ props.rowIndex }}</DropdownMenuLabel>
+      <DropdownMenuLabel>Wiersz {{ props.rowIndex }}</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
         <DropdownMenuItem>
           <Wrench class="mr-2 h-4 w-4" />
-          <span>Edit</span>
+          <span>Edytuj</span>
           <!-- <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> -->
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Copy class="mr-2 h-4 w-4" />
-          <span>Copy</span>
+          <span>Kopiuj</span>
           <!-- <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> -->
         </DropdownMenuItem>
         <DropdownMenuItem>
           <FileJson2 class="mr-2 h-4 w-4" />
-          <span>Copy as JSON</span>
+          <span>Kopiuj w formacie JSON</span>
           <!-- <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> -->
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          class="focus:bg-critical-hover text-critical-text font-bold"
+        >
           <Trash class="mr-2 h-4 w-4" />
-          <span>Delete</span>
+          <span>Usuń</span>
           <!-- <DropdownMenuShortcut>⌘B</DropdownMenuShortcut> -->
         </DropdownMenuItem>
         <!-- <DropdownMenuItem>

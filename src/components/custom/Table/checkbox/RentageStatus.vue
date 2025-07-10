@@ -26,7 +26,7 @@ const isRented = computed(() => props.variant === "rented");
   <div
     class="flex flex-row items-center justify-center gap-2 uppercase select-none"
   >
-    <span>
+    <span class="text-xs">
       {{ isRented ? "Wypożyczony" : "Dostępny" }}
     </span>
     <div
