@@ -303,7 +303,7 @@ watch(pageSize, (newSize) => {
               v-for="header in headerGroup.headers"
               :key="header.id"
               :colSpan="header.colSpan"
-              class="px-4 py-6 text-center"
+              class="px-1 py-3 text-center"
             >
               <FlexRender
                 v-if="!header.isPlaceholder"
@@ -325,7 +325,7 @@ watch(pageSize, (newSize) => {
             <td
               v-for="cell in row.getVisibleCells()"
               :key="cell.id"
-              class="px-4 py-2 text-center"
+              class="px-4 text-center"
             >
               <FlexRender
                 :render="cell.column.columnDef.cell"

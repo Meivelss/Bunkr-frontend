@@ -25,7 +25,7 @@ const copyToClipboard = () => {
       <TooltipTrigger>
         <Button
           @click="copyToClipboard"
-          class="hover:bg-secondary-hover/80 cursor-pointer bg-transparent text-xs shadow-none hover:shadow-sm"
+          class="hover:bg-secondary-hover/80 h-min cursor-pointer bg-transparent py-1 text-xs shadow-none hover:shadow-sm"
         >
           {{ props.label.slice(0, 12) }}
         </Button>
