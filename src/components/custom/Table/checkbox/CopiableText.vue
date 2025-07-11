@@ -6,6 +6,21 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  ContextMenu,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
 
 const props = defineProps({
   label: {
@@ -20,19 +35,20 @@ const copyToClipboard = () => {
 </script>
 
 <template>
-  <TooltipProvider>
-    <Tooltip>
-      <TooltipTrigger>
-        <Button
-          @click="copyToClipboard"
-          class="hover:bg-secondary-hover/80 h-min cursor-pointer bg-transparent py-1 text-xs shadow-none hover:shadow-sm"
-        >
-          {{ props.label.slice(0, 12) }}
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent class="">
-        <p>{{ label }}</p>
-      </TooltipContent>
-    </Tooltip>
-  </TooltipProvider>
+  <ContextMenu>
+    <ContextMenuTrigger>
+      <Button
+        @click="copyToClipboard"
+        class="hover:bg-secondary-hover/80 h-min cursor-pointer bg-transparent py-1 text-xs shadow-none hover:shadow-sm"
+      >
+        {{ props.label.slice(0, 12) }}
+      </Button>
+    </ContextMenuTrigger>
+    <ContextMenuContent class="w-64">
+      <ContextMenuLabel>{{ props.label }}</ContextMenuLabel>
+      <ContextMenuSeparator />
+      <ContextMenuItem> Szybka Edycja </ContextMenuItem>
+      <ContextMenuItem> Edycja </ContextMenuItem>
+    </ContextMenuContent>
+  </ContextMenu>
 </template>
