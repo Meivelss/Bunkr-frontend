@@ -3,10 +3,36 @@
 @import "tw-animate-css";
 
 @theme {
+  /* branding */
   --color-primary: #ffc72c;
   --color-secondary: #611e2e;
   --color-accent: #cfc4b7;
   --color-complementary: #efe9e1;
+
+  /* for storage status bean */
+  --color-item-rented: oklch(90.5% 0.182 98.111);
+  --color-item-available: oklch(87.1% 0.15 154.449);
+  --color-item-rented-border: oklch(47.6% 0.114 61.907);
+  --color-item-available-border: oklch(44.8% 0.119 151.328);
+
+  --color-primary-hover: oklch(92.2% 0 0);
+  --color-secondary-hover: oklch(98.5% 0 0);
+  --color-critical-hover: oklch(93.6% 0.032 17.717);
+
+  /* for use in most borders & separators */
+  --color-primary-border: #d4d4d4;
+
+  /* text */
+  --color-primary-text: oklch(70.8% 0 0);
+  --color-text-muted-foreground: oklch(43.9% 0 0);
+  --color-secondary-text: oklch(43.9% 0 0);
+  --color-critical-text: oklch(50.5% 0.213 27.518);
+
+  /* dropdown menu */
+  --color-popover: #ffffff;
+  --color-popover-foreground: #000000;
+
+  /* fonts */
   --font-header: "Roboto", sans-serif;
   --font-body: "Exo 2", sans-serif;
 }

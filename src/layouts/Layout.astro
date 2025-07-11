@@ -19,7 +19,11 @@ import { ClientRouter } from "astro:transitions";
   </head>
   <body>
     <main>
-      <slot />
+      <div
+        class="flex h-screen w-full bg-[url('/forest.jpg')] bg-cover bg-center"
+      >
+        <slot />
+      </div>
     </main>
   </body>
 </html>
