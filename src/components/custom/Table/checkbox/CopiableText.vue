@@ -44,9 +44,10 @@ const copyToClipboard = () => {
         {{ props.label.slice(0, 12) }}
       </Button>
     </ContextMenuTrigger>
-    <ContextMenuContent class="w-64">
+    <ContextMenuContent class="w-auto">
       <ContextMenuLabel>{{ props.label }}</ContextMenuLabel>
       <ContextMenuSeparator />
+      <ContextMenuItem> Kopiuj </ContextMenuItem>
       <ContextMenuItem> Szybka Edycja </ContextMenuItem>
       <ContextMenuItem> Edycja </ContextMenuItem>
     </ContextMenuContent>
