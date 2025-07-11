@@ -31,7 +31,7 @@ import type { FilterFn } from "@tanstack/vue-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import defaultData from "@/randomized_items.json";
+import defaultData from "@/inventory_items.json";
 import { watch, computed, ref, h } from "vue";
 import { RotateCcw } from "lucide-vue-next";
 import DetailsButton from "@/components/custom/Table/checkbox/DetailsButton.vue";
@@ -40,7 +40,7 @@ import CopiableText from "@/components/custom/Table/checkbox/CopiableText.vue";
 
 /* storage item type */
 type Item = {
-  generalId: string;
+  id: string;
   itemId: string;
   name: string;
   building: string;
@@ -49,8 +49,10 @@ type Item = {
   shelfLevel: string;
   comment: string;
   photo: string;
+  modificationDate: string;
+  creationDate: string;
   isRented: boolean;
-  rentedBy: string;
+  lastModifier: string;
 };
 
 /* necessary for tanstacc */
@@ -88,10 +90,10 @@ const columns = [
         info.row.index + 1,
       ),
   },
-  columnHelper.accessor("generalId", {
+  columnHelper.accessor("id", {
     cell: (info) =>
       h(CopiableText, {
-        label: info.getValue().slice(0, 5),
+        label: info.getValue(),
       }),
     header: () => "ID",
     footer: (props) => props.column.id,
@@ -142,6 +144,30 @@ const columns = [
   }),
   columnHelper.accessor("shelf", {
     header: "Półka",
+    cell: (info) =>
+      h(CopiableText, {
+        label: info.getValue(),
+      }),
+    footer: (props) => props.column.id,
+  }),
+  columnHelper.accessor("modificationDate", {
+    header: "Modyfikowano",
+    cell: (info) =>
+      h(CopiableText, {
+        label: info.getValue(),
+      }),
+    footer: (props) => props.column.id,
+  }),
+  columnHelper.accessor("lastModifier", {
+    header: "Modyfikujący",
+    cell: (info) =>
+      h(CopiableText, {
+        label: info.getValue(),
+      }),
+    footer: (props) => props.column.id,
+  }),
+  columnHelper.accessor("comment", {
+    header: "Komentarz",
     cell: (info) =>
       h(CopiableText, {
         label: info.getValue(),

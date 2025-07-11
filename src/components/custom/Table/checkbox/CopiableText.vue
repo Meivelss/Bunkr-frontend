@@ -41,7 +41,7 @@ const copyToClipboard = () => {
         @click="copyToClipboard"
         class="hover:bg-secondary-hover/80 h-min cursor-pointer bg-transparent py-1 text-xs shadow-none hover:shadow-sm"
       >
-        {{ props.label.slice(0, 12) }}
+        {{ props.label }}
       </Button>
     </ContextMenuTrigger>
     <ContextMenuContent class="w-auto">
